@@ -17,7 +17,9 @@ function agegate_preprocess_page(&$vars){
         'cookiedomain'=> variable_get('agegate_cookiedomain'),
         'sitename'    => variable_get('agegate_sitename'),
         'sitemessage' => variable_get('agegate_sitemessage'),
-        'sitelogo'    => variable_get('agegate_logoshow'),
+        'logoshow'    => variable_get('agegate_logoshow'),
+        'logourl'     => theme_get_setting('logo'),
+        'buttontext'    => variable_get('agegate_buttontext'),
     );
     
     //bundle settings for agegate.js
@@ -120,6 +122,12 @@ function agegate_admin_settings_form($node, &$form_state){
         '#type' => 'textarea',
         '#default_value' => variable_get(t('agegate_sitemessage'),t('By clicking SUBMIT you verify that you are 21 years of age or older.')),
     );
+    $form['general']['agegate_buttontext'] = array(
+        '#title' => t('Submit Button Text'),
+        '#description' => t('Text of the submit button'),
+        '#type' => 'textfield',
+        '#default_value' => variable_get(t('agegate_buttontext'),t('Submit')),
+    );
     
     // LOGO
     $form['logo'] = array(
@@ -136,12 +144,15 @@ function agegate_admin_settings_form($node, &$form_state){
         '#default' => TRUE,
         '#default_value' => variable_get('agegate_logoshow',1),
     );
+    /*
     $form['logo']['agegate_logourl'] = array(
         '#title' => t('Logo'),
         '#description' => t('Check to display the site logo in the Agegate'),
         '#type' => 'textfield',
         '#default_value' => variable_get('agegate_sitename',variable_get('site_name')),
     );
+    */
+
     
     // ADVANCED
     $form['advanced'] = array(
