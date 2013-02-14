@@ -99,6 +99,7 @@ function agegate_admin_settings_form($node, &$form_state){
         '#suffix' => '</p>'
     );
     
+    // GENERAL
     $form['general'] = array(
         '#title' => t('General Settings'),
         '#type' => 'fieldset',
