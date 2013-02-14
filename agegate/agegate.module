@@ -1,0 +1,191 @@
+<?php
+/**
+ * @file
+ * This module creates a field that Content Types can use to display
+ * price and buy-buttons. The data comes from eWinery. -- file.
+ * This was developed by Nazario A. Ayala (Niztech) On Febuary 14th, 2013
+ */
+
+
+/**
+ * hook_preprocess_page()
+ */
+function agegate_preprocess_page(&$vars){
+    // generate settinsg array for agegate
+    $settings = array(
+        'debugmode'   => variable_get('agegate_debugmode'),
+        'cookiedomain'=> variable_get('agegate_cookiedomain'),
+        'sitename'    => variable_get('agegate_sitename'),
+        'sitemessage' => variable_get('agegate_sitemessage'),
+        'sitelogo'    => variable_get('agegate_logoshow'),
+    );
+    
+    //bundle settings for agegate.js
+    drupal_add_js( array('agegate' => $settings), 'setting');
+    
+    //add agegate.js onto module
+    drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
+}
+
+
+/**
+ * Implements hook_help().
+ * This is supposed to appear in the Help menu
+ * There should also be a link in the module page
+ */
+function agegate_help($path, $arg) {
+    switch($path){
+        case 'admin/help#agegate':
+        {
+            $output = '<h3>'.t('About').'</h3>';
+            $output += '<p>'.t('This module creates an agegate. Visitors to the site must confirm their age as being over 21 in order to proceed visiting the site.').'</p>';
+            return $output;
+            break;
+        }
+    }
+}
+
+/**
+ * Implements hook_permission(). 
+ */
+function agegate_permissions(){
+    return array(
+        'Administrator Agegate' => array(
+            'title' => t('Administrator Agegate'),
+            'description' => t('Configure Agegate Options'),
+        ),
+    );
+}
+
+/**
+ * Imeplements hook_menu().
+ */
+function agegate_menu(){
+    $items = array();
+    
+    // Admin Configuration Group
+    // When an admin has logged in -- this creates a group
+    // under the configuration page. 
+    $items['admin/config/agegate'] = array(
+        'title' => 'Agegate',
+        'description' => 'Administer Agegate Options',
+        'access arguments' => array('administer agegate'),
+    );
+    
+    // Admin configuration - Settings
+    // Adds a link under the Admin Configuration Group
+    // mentioned in the above block.
+    $items['admin/config/agegate/manage'] = array(
+        'title' => 'Agegate Settings',
+        'description' => 'Manage Agegate Cart Options and Settings',
+        'access arguments' => array('administer Agegate'),
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('agegate_admin_settings_form'),
+    );
+    
+    return $items;
+}
+
+/**
+ * Implements hook_form().
+ */
+function agegate_admin_settings_form($node, &$form_state){
+    $form = array();
+    $form['overview'] = array(
+        '#markup' => t('This interface allows administrators to manage settings for the Agegate.'),
+        '#prefix' => '<p>',
+        '#suffix' => '</p>'
+    );
+    
+    $form['general'] = array(
+        '#title' => t('General Settings'),
+        '#type' => 'fieldset',
+        '#collapsible' => FALSE,
+    );
+    $form['general']['agegate_cookiedomain'] = array(
+        '#title' => t('Cookie\'s Domain'),
+        '#description' => t('Set  the domain name that eWinery will serach for. It is recomended that it be a top level domain.<br />Note: you need not use eWinery i norder to use this module.'),
+        '#type' => 'textfield',
+        '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+    );
+    $form['general']['agegate_sitename'] = array(
+        '#title' => t('Website Name'),
+        '#description' => t('How would you like your websites name to display on the agegate'),
+        '#type' => 'textfield',
+        '#default_value' => variable_get('agegate_sitename',variable_get('site_name')),
+    );
+    $form['general']['agegate_sitemessage'] = array(
+        '#title' => t('Legal Message'),
+        '#description' => t('Set the legal verbage that the user sees.'),
+        '#type' => 'textarea',
+        '#default_value' => variable_get(t('agegate_sitemessage'),t('By clicking SUBMIT you verify that you are 21 years of age or older.')),
+    );
+    
+    // LOGO
+    $form['logo'] = array(
+        '#title' => t('Logo'),
+        '#description' => t('Logo specific settings'),
+        '#type' => 'fieldset',
+        '#collapsible' => TRUE,
+        '#collapsed'=> FALSE,
+    );
+    $form['logo']['agegate_logoshow'] = array(
+        '#title' => t('Logo'),
+        '#description' => t('Check to display the site logo in the Agegate'),
+        '#type' => 'checkbox',
+        '#default' => TRUE,
+        '#default_value' => variable_get('agegate_logoshow',1),
+    );
+    $form['logo']['agegate_logourl'] = array(
+        '#title' => t('Logo'),
+        '#description' => t('Check to display the site logo in the Agegate'),
+        '#type' => 'textfield',
+        '#default_value' => variable_get('agegate_sitename',variable_get('site_name')),
+    );
+    
+    // ADVANCED
+    $form['advanced'] = array(
+        '#title' => t('Advanced'),
+        '#description' => t('Extra settings'),
+        '#type' => 'fieldset',
+        '#collapsible' => TRUE,
+        '#collapsed'=> TRUE,
+    );
+    
+    $form['advanced']['agegate_debugmode'] = array(
+        '#title' => t('Debug mode'),
+        '#description' => t('This generates javascript output to the browsers concole. Enabling only affects TEST and DEV enviroments. Also, enabling my cause Internet Explorer to not render the page completly. This is an issue with IE.'),
+        '#type' => 'checkbox',
+        '#default' => FALSE,
+        '#default_value' => variable_get('agegate_debugmode',0),
+    );
+    
+    $form['advanced']['agegate_cookieformat'] = array(
+        '#title' => t('Cookie Format Decoded'),
+        '#description' => t('eWinery requires that the cookie be stored in an encoded format. If for some reason you need the cookie stored in a raw format (decoded) check this box.'),
+        '#type' => 'checkbox',
+        '#default_value' => variable_get('agegate_cookieformat',0),
+    );
+    
+    return system_settings_form($form);
+}
+
+/**
+ * Validates agegate_admin_settings_form()
+ */
+function agegate_admin_settings_form_validate($form, &$form_state){
+    //dpm($form_state);
+    /*
+    outputs to screen array of form upon fail
+    */
+    
+    //$form_state['values']
+    /*
+    displays the values of the form.
+    */
+    
+    //form_set_err(string elem_name, t($message))
+    /*
+    on error call the above function on fail;
+    */
+}
