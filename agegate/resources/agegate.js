@@ -8,8 +8,11 @@ function startAgegate(context, setting){
     var COOKIE_DOMAIN = Drupal.settings.agegate.cookiedomain;
     var SITENAME      = Drupal.settings.agegate.sitename;
     var MESSAGE       = Drupal.settings.agegate.sitemessage;
-    var LOGOSHOW      = Drupal.settings.agegate.sitelogoshow;
-    var LOGOURL       = Drupal.settings.agegate.sitelogourl;
+    var LOGOSHOW      = Drupal.settings.agegate.logoshow;
+    var LOGOURL       = Drupal.settings.agegate.logourl;
+    var BUTTONTEXT    = Drupal.settings.agegate.buttontext;
+    
+    console.log(LOGOURL);
     
     jQuery.cookie.raw = false;
     var cookie_options = {
@@ -19,7 +22,7 @@ function startAgegate(context, setting){
     }
     var COOKIE_NAME = 'ISLEGAL';
 
-    var agegatehtml = '<div id="agegate" style="display:block"><div class="agegate-message">' + (LOGOSHOW == true ?'<img src="' + LOGOURL + '" alt="Logo"/>' : '' ) + '<h1>Welcome to '+SITENAME+'</h1><p>'+MESSAGE+'</p><button id="olderthan21">Submit</button></div></div>';
+    var agegatehtml = '<div id="agegate" style="display:block"><div class="agegate-message">' + (LOGOSHOW == true ?'<img class="agegate-logo" src="' + LOGOURL + '" alt="Logo"/>' : '' ) + '<h1>Welcome to '+SITENAME+'</h1><p>'+MESSAGE+'</p><span id="olderthan21" class="button verify-age">' +BUTTONTEXT + '</span></div></div>';
     
     var cookieValue = '{"ROWCOUNT":1,"COLUMNS":["ISLEGAL","REDIRECTURL"],"DATA":{"ISLEGAL":["1"],"REDIRECTURL":["http://www.centurycouncil.org/"]}}';
     
