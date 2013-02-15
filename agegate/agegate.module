@@ -25,8 +25,11 @@ function agegate_preprocess_page(&$vars){
     //bundle settings for agegate.js
     drupal_add_js( array('agegate' => $settings), 'setting');
     
-    //add agegate.js onto module
-    drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
+    //check to see if you are an administrator
+    if(user_access('administrator') === false){
+        //add agegate.js onto module
+        drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
+    }
 }
 
 
