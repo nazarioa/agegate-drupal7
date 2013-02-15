@@ -12,6 +12,15 @@
  */
 function agegate_preprocess_page(&$vars){
     // generate settinsg array for agegate
+    $display = true;
+    switch ($_SERVER['PANTHEON_ENVIRONMENT']){
+        case 'dev':
+            if(variable_get('agegate_showdev') == 0) $display = false;
+        case 'test':
+            if(variable_get('agegate_showtest') == 0) $display = false;
+    }
+    $display = (user_access('administrator') == 1)?false: $display;
+    
     $settings = array(
         'debugmode'   => variable_get('agegate_debugmode'),
         'cookiedomain'=> variable_get('agegate_cookiedomain'),
@@ -19,17 +28,12 @@ function agegate_preprocess_page(&$vars){
         'sitemessage' => variable_get('agegate_sitemessage'),
         'logoshow'    => variable_get('agegate_logoshow'),
         'logourl'     => theme_get_setting('logo'),
-        'buttontext'    => variable_get('agegate_buttontext'),
+        'buttontext'  => variable_get('agegate_buttontext'),
+        'display'      => $display,
     );
     
-    //bundle settings for agegate.js
     drupal_add_js( array('agegate' => $settings), 'setting');
-    
-    //check to see if you are an administrator
-    if(user_access('administrator') === false){
-        //add agegate.js onto module
-        drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
-    }
+    drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
 }
 
 
