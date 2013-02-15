@@ -137,6 +137,26 @@ function agegate_admin_settings_form($node, &$form_state){
         '#default_value' => variable_get(t('agegate_buttontext'),t('Submit')),
     );
     
+    
+    //Display
+    if(isset($_SERVER['PANTHEON_ENVIRONMENT'])){
+    $form['enviromentsettings'] = array(
+        '#title' => t('Enviroment Settings'),
+        '#type' => 'fieldset',
+        '#collapsible' => FALSE,
+    );
+    $form['enviromentsettings']['agegate_showdev'] = array(
+        '#title' => t('Show On Dev'),
+        '#type' => 'checkbox',
+        '#default_value' => variable_get('agegate_showdev',0),
+    );
+    $form['enviromentsettings']['agegate_showtest'] = array(
+        '#title' => t('Show On Test'),
+        '#type' => 'checkbox',
+        '#default_value' => variable_get('agegate_showtest',0),
+    );
+    }
+    
     // LOGO
     $form['logo'] = array(
         '#title' => t('Logo'),
