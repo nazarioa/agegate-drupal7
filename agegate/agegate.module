@@ -20,13 +20,13 @@ function agegate_preprocess_page(&$vars){
 
     switch ($enviroment){
         case 'dev':
-            if(variable_get('agegate_showdev') == 0) $display = false;
+            if(variable_get('agegate_show') == 0) $display = false;
             break;
         case 'test':
-            if(variable_get('agegate_showtest') == 0) $display = false;
+            if(variable_get('agegate_show') == 0) $display = false;
             break;
         case 'live' :
-            $display = false;
+            $display = true;
             break;
     }
     $display = (user_access('administrator') == 1)?false: $display;
@@ -131,12 +131,6 @@ function agegate_admin_settings_form($node, &$form_state){
         '#type' => 'fieldset',
         '#collapsible' => FALSE,
     );
-    $form['general']['agegate_cookiedomain'] = array(
-        '#title' => t('Cookie\'s Domain'),
-        '#description' => t('Set  the domain name that eWinery will serach for. It is recomended that it be a top level domain.<br />Note: you need not use eWinery i norder to use this module.'),
-        '#type' => 'textfield',
-        '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
-    );
     $form['general']['agegate_sitename'] = array(
         '#title' => t('Website Name'),
         '#description' => t('How would you like your websites name to display on the agegate'),
@@ -156,23 +150,72 @@ function agegate_admin_settings_form($node, &$form_state){
         '#default_value' => variable_get(t('agegate_buttontext'),t('Submit')),
     );
 
-    if(isset($_SERVER['PANTHEON_ENVIRONMENT'])){
     //Display
     $form['enviromentsettings'] = array(
         '#title' => t('Enviroment Settings'),
         '#type' => 'fieldset',
         '#collapsible' => FALSE,
     );
-    $form['enviromentsettings']['agegate_showdev'] = array(
-        '#title' => t('Show On Dev'),
-        '#type' => 'checkbox',
-        '#default_value' => variable_get('agegate_showdev',0),
-    );
-    $form['enviromentsettings']['agegate_showtest'] = array(
-        '#title' => t('Show On Test'),
-        '#type' => 'checkbox',
-        '#default_value' => variable_get('agegate_showtest',0),
-    );
+    
+    if(isset($_SERVER['PANTHEON_ENVIRONMENT'])){
+    $enviroment = $_SERVER['PANTHEON_ENVIRONMENT'];
+    
+    
+    switch ($enviroment){
+        case 'dev':
+            $form['enviromentsettings']['agegate_show'] = array(
+                '#title' => t('Show On Dev'),
+                '#type' => 'checkbox',
+                '#default_value' => variable_get('agegate_show',0),
+            );
+            $form['enviromentsettings']['agegate_cookiedomain'] = array(
+                '#title' => t('Cookie\'s Domain'),
+                '#description' => t('Set the DEV domain name that eWinery DEV will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
+                '#type' => 'textfield',
+                '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+            );
+            break;
+            
+        case 'test':
+            $form['enviromentsettings']['agegate_show'] = array(
+                '#title' => t('Show On Test'),
+                '#type' => 'checkbox',
+                '#default_value' => variable_get('agegate_show',0),
+            );
+            $form['enviromentsettings']['agegate_cookiedomain'] = array(
+                '#title' => t('Cookie\'s Domain'),
+                '#description' => t('Set the TEST domain name that eWinery TEST will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
+                '#type' => 'textfield',
+                '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+            );
+            break;
+        
+        case 'live':
+            $form['enviromentsettings']['agegate_show'] = array(
+                '#title' => t('Show On Live'),
+                '#type' => 'checkbox',
+                '#default_value' => variable_get('agegate_show',0),
+            );
+            $form['enviromentsettings']['agegate_cookiedomain'] = array(
+                '#title' => t('Cookie\'s Domain'),
+                '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
+                '#type' => 'textfield',
+                '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+            );
+            break;
+    }
+    }else{
+        $form['enviromentsettings']['agegate_show'] = array(
+            '#title' => t('Show On Live'),
+            '#type' => 'checkbox',
+            '#default_value' => variable_get('agegate_show',0),
+        );
+        $form['enviromentsettings']['agegate_cookiedomain'] = array(
+            '#title' => t('Cookie\'s Domain'),
+            '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
+            '#type' => 'textfield',
+            '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+        );
     }
 
     // LOGO
