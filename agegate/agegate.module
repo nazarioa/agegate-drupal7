@@ -13,7 +13,12 @@
 function agegate_preprocess_page(&$vars){
     // generate settinsg array for agegate
     $display = true;
-    switch ($_SERVER['PANTHEON_ENVIRONMENT']){
+    $enviroment = 'live';
+
+    if(isset($_SERVER['PANTHEON_ENVIRONMENT']))
+        $enviroment = $_SERVER['PANTHEON_ENVIRONMENT'];
+
+    switch ($enviroment){
         case 'dev':
             if(variable_get('agegate_showdev') == 0) $display = false;
             break;
@@ -62,9 +67,10 @@ function agegate_help($path, $arg) {
 /**
  * Implements hook_permission().
  */
-function agegate_permissions(){
+
+function agegate_permission(){
     return array(
-        'Administrator Agegate' => array(
+        'admin agegate settings' => array(
             'title' => t('Administrator Agegate'),
             'description' => t('Configure Agegate Options'),
         ),
@@ -83,7 +89,7 @@ function agegate_menu(){
     $items['admin/config/agegate'] = array(
         'title' => 'Agegate',
         'description' => 'Administer Agegate Options',
-        'access arguments' => array('administer agegate'),
+        'access arguments' => array('admin agegate settings'),
     );
 
     // Admin configuration - Settings
@@ -92,12 +98,20 @@ function agegate_menu(){
     $items['admin/config/agegate/manage'] = array(
         'title' => 'Agegate Settings',
         'description' => 'Manage Agegate Cart Options and Settings',
-        'access arguments' => array('administer Agegate'),
         'page callback' => 'drupal_get_form',
         'page arguments' => array('agegate_admin_settings_form'),
+        'access arguments' => array('admin agegate settings'),
     );
 
     return $items;
+}
+
+/**
+ * Implements hook_enable().
+ */
+function agegate_enable(){
+    //enable administrators access by defualt
+    user_role_grant_permissions(3, array('admin agegate settings'), 'agegate');
 }
 
 /**
