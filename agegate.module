@@ -1,294 +1,295 @@
 <?php
 /**
- * @file
- * This module creates a field that Content Types can use to display
- * price and buy-buttons. The data comes from eWinery. -- file.
- * This was developed by Nazario A. Ayala (Niztech) On Febuary 14th, 2013
- */
+* @file
+* This module creates a field that Content Types can use to display
+* price and buy-buttons. The data comes from eWinery. -- file.
+* This was developed by Nazario A. Ayala (Niztech) On Febuary 14th, 2013
+*/
 
 
 /**
- * hook_preprocess_page()
- */
+* hook_preprocess_page()
+*/
 function agegate_preprocess_page(&$vars){
-    // generate settinsg array for agegate
+  // generate settinsg array for agegate
+  $display = true;
+  $enviroment = 'live';
+
+  if(isset($_SERVER['PANTHEON_ENVIRONMENT'])){
+    $enviroment = $_SERVER['PANTHEON_ENVIRONMENT'];
+  }
+
+  switch ($enviroment){
+    case 'dev':
+    if(variable_get('agegate_show') == 0) $display = false;
+    break;
+    case 'test':
+    if(variable_get('agegate_show') == 0) $display = false;
+    break;
+    case 'live' :
     $display = true;
-    $enviroment = 'live';
+    break;
+  }
 
-    if(isset($_SERVER['PANTHEON_ENVIRONMENT']))
-        $enviroment = $_SERVER['PANTHEON_ENVIRONMENT'];
+  $display = (user_access('administrator') == 1) ? false : $display;
 
-    switch ($enviroment){
-        case 'dev':
-            if(variable_get('agegate_show') == 0) $display = false;
-            break;
-        case 'test':
-            if(variable_get('agegate_show') == 0) $display = false;
-            break;
-        case 'live' :
-            $display = true;
-            break;
-    }
+  $settings = array(
+    'debugmode'   => variable_get('agegate_debugmode'),
+    'cookiedomain'=> variable_get('agegate_cookiedomain'),
+    'sitename'    => variable_get('agegate_sitename'),
+    'sitemessage' => variable_get('agegate_sitemessage'),
+    'logoshow'    => variable_get('agegate_logoshow'),
+    'logourl'     => theme_get_setting('logo'),
+    'buttontext'  => variable_get('agegate_buttontext'),
+    'display'      => $display,
+  );
 
-    $display = (user_access('administrator') == 1) ? false : $display;
-
-    $settings = array(
-        'debugmode'   => variable_get('agegate_debugmode'),
-        'cookiedomain'=> variable_get('agegate_cookiedomain'),
-        'sitename'    => variable_get('agegate_sitename'),
-        'sitemessage' => variable_get('agegate_sitemessage'),
-        'logoshow'    => variable_get('agegate_logoshow'),
-        'logourl'     => theme_get_setting('logo'),
-        'buttontext'  => variable_get('agegate_buttontext'),
-        'display'      => $display,
-    );
-
-    drupal_add_js( array('agegate' => $settings), 'setting');
-    drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
+  drupal_add_js( array('agegate' => $settings), 'setting');
+  drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
 }
 
 
 /**
- * Implements hook_help().
- * This is supposed to appear in the Help menu
- * There should also be a link in the module page
- */
+* Implements hook_help().
+* This is supposed to appear in the Help menu
+* There should also be a link in the module page
+*/
 function agegate_help($path, $arg) {
-    switch($path){
-        case 'admin/help#agegate':
-        {
-            $output = '<h3>'.t('About').'</h3>';
-            $output += '<p>'.t('This module creates an agegate. Visitors to the site must confirm their age as being over 21 in order to proceed visiting the site.').'</p>';
-            return $output;
-            break;
-        }
+  switch($path){
+    case 'admin/help#agegate':
+    {
+      $output = '<h3>'.t('About').'</h3>';
+      $output += '<p>'.t('This module creates an agegate. Visitors to the site must confirm their age as being over 21 in order to proceed visiting the site.').'</p>';
+      return $output;
+      break;
     }
+  }
 }
 
 /**
- * Implements hook_permission().
- */
+* Implements hook_permission().
+*/
 
 function agegate_permission(){
-    return array(
-        'admin agegate settings' => array(
-            'title' => t('Administrator Agegate'),
-            'description' => t('Configure Agegate Options'),
-        ),
-    );
+  return array(
+    'admin agegate settings' => array(
+      'title' => t('Administrator Agegate'),
+      'description' => t('Configure Agegate Options'),
+    ),
+  );
 }
 
 /**
- * Imeplements hook_menu().
- */
+* Imeplements hook_menu().
+*/
 function agegate_menu(){
-    $items = array();
+  $items = array();
 
-    // Admin Configuration Group
-    // When an admin has logged in -- this creates a group
-    // under the configuration page.
-    $items['admin/config/agegate'] = array(
-        'title' => 'Agegate',
-        'description' => 'Administer Agegate Options',
-        'access arguments' => array('admin agegate settings'),
-    );
+  // Admin Configuration Group
+  // When an admin has logged in -- this creates a group
+  // under the configuration page.
+  $items['admin/config/agegate'] = array(
+    'title' => 'Agegate',
+    'description' => 'Administer Agegate Options',
+    'access arguments' => array('admin agegate settings'),
+  );
 
-    // Admin configuration - Settings
-    // Adds a link under the Admin Configuration Group
-    // mentioned in the above block.
-    $items['admin/config/agegate/manage'] = array(
-        'title' => 'Agegate Settings',
-        'description' => 'Manage Agegate Cart Options and Settings',
-        'page callback' => 'drupal_get_form',
-        'page arguments' => array('agegate_admin_settings_form'),
-        'access arguments' => array('admin agegate settings'),
-    );
+  // Admin configuration - Settings
+  // Adds a link under the Admin Configuration Group
+  // mentioned in the above block.
+  $items['admin/config/agegate/manage'] = array(
+    'title' => 'Agegate Settings',
+    'description' => 'Manage Agegate Cart Options and Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('agegate_admin_settings_form'),
+    'access arguments' => array('admin agegate settings'),
+  );
 
-    return $items;
+  return $items;
 }
 
 /**
- * Implements hook_enable().
- */
+* Implements hook_enable().
+*/
 function agegate_enable(){
-    //enable administrators access by defualt
-    user_role_grant_permissions(3, array('admin agegate settings'), 'agegate');
+  //enable administrators access by defualt
+  user_role_grant_permissions(3, array('admin agegate settings'), 'agegate');
 }
 
 /**
- * Implements hook_form().
- */
+* Implements hook_form().
+*/
 function agegate_admin_settings_form($node, &$form_state){
-    $form = array();
-    $form['overview'] = array(
-        '#markup' => t('This interface allows administrators to manage settings for the Agegate.'),
-        '#prefix' => '<p>',
-        '#suffix' => '</p>'
-    );
+  $form = array();
+  $form['overview'] = array(
+    '#markup' => t('This interface allows administrators to manage settings for the Agegate.'),
+    '#prefix' => '<p>',
+    '#suffix' => '</p>'
+  );
 
-    // GENERAL
-    $form['general'] = array(
-        '#title' => t('General Settings'),
-        '#type' => 'fieldset',
-        '#collapsible' => FALSE,
-    );
-    $form['general']['agegate_sitename'] = array(
-        '#title' => t('Website Name'),
-        '#description' => t('How would you like your websites name to display on the agegate'),
-        '#type' => 'textfield',
-        '#default_value' => variable_get('agegate_sitename',variable_get('site_name')),
-    );
-    $form['general']['agegate_sitemessage'] = array(
-        '#title' => t('Legal Message'),
-        '#description' => t('Set the legal verbage that the user sees.'),
-        '#type' => 'textarea',
-        '#default_value' => variable_get(t('agegate_sitemessage'),t('By clicking SUBMIT you verify that you are 21 years of age or older.')),
-    );
-    $form['general']['agegate_buttontext'] = array(
-        '#title' => t('Submit Button Text'),
-        '#description' => t('Text of the submit button'),
-        '#type' => 'textfield',
-        '#default_value' => variable_get(t('agegate_buttontext'),t('Submit')),
-    );
+  // GENERAL
+  $form['general'] = array(
+    '#title' => t('General Settings'),
+    '#type' => 'fieldset',
+    '#collapsible' => FALSE,
+  );
+  $form['general']['agegate_sitename'] = array(
+    '#title' => t('Website Name'),
+    '#description' => t('How would you like your websites name to display on the agegate'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('agegate_sitename',variable_get('site_name')),
+  );
+  $form['general']['agegate_sitemessage'] = array(
+    '#title' => t('Legal Message'),
+    '#description' => t('Set the legal verbage that the user sees.'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get(t('agegate_sitemessage'),t('By clicking SUBMIT you verify that you are 21 years of age or older.')),
+  );
+  $form['general']['agegate_buttontext'] = array(
+    '#title' => t('Submit Button Text'),
+    '#description' => t('Text of the submit button'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get(t('agegate_buttontext'),t('Submit')),
+  );
 
-    //Display
-    if(isset($_SERVER['PANTHEON_ENVIRONMENT'])){
+  //Display
+  if(isset($_SERVER['PANTHEON_ENVIRONMENT'])){
     $form['enviromentsettings'] = array(
-        '#title' => t('Enviroment Settings'),
-        '#type' => 'fieldset',
-        '#collapsible' => FALSE,
+      '#title' => t('Enviroment Settings'),
+      '#type' => 'fieldset',
+      '#collapsible' => FALSE,
     );
-    
+
     if(isset($_SERVER['PANTHEON_ENVIRONMENT'])){
-    $enviroment = $_SERVER['PANTHEON_ENVIRONMENT'];
-    
-    
-    switch ($enviroment){
+      $enviroment = $_SERVER['PANTHEON_ENVIRONMENT'];
+
+
+      switch ($enviroment){
         case 'dev':
-            $form['enviromentsettings']['agegate_show'] = array(
-                '#title' => t('Show On Dev'),
-                '#type' => 'checkbox',
-                '#default_value' => variable_get('agegate_show',0),
-            );
-            $form['enviromentsettings']['agegate_cookiedomain'] = array(
-                '#title' => t('Cookie\'s Domain'),
-                '#description' => t('Set the DEV domain name that eWinery DEV will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
-                '#type' => 'textfield',
-                '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
-            );
-            break;
-            
-        case 'test':
-            $form['enviromentsettings']['agegate_show'] = array(
-                '#title' => t('Show On Test'),
-                '#type' => 'checkbox',
-                '#default_value' => variable_get('agegate_show',0),
-            );
-            $form['enviromentsettings']['agegate_cookiedomain'] = array(
-                '#title' => t('Cookie\'s Domain'),
-                '#description' => t('Set the TEST domain name that eWinery TEST will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
-                '#type' => 'textfield',
-                '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
-            );
-            break;
-        
-        case 'live':
-            $form['enviromentsettings']['agegate_show'] = array(
-                '#title' => t('Show On Live'),
-                '#type' => 'checkbox',
-                '#default_value' => variable_get('agegate_show',1),
-                '#disabled' => TRUE,
-            );
-            $form['enviromentsettings']['agegate_cookiedomain'] = array(
-                '#title' => t('Cookie\'s Domain'),
-                '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
-                '#type' => 'textfield',
-                '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
-            );
-            break;
-    }
-    }else{
         $form['enviromentsettings']['agegate_show'] = array(
-            '#title' => t('Show On Live'),
-            '#type' => 'checkbox',
-            '#default_value' => variable_get('agegate_show',0),
+          '#title' => t('Show On Dev'),
+          '#type' => 'checkbox',
+          '#default_value' => variable_get('agegate_show',0),
         );
         $form['enviromentsettings']['agegate_cookiedomain'] = array(
-            '#title' => t('Cookie\'s Domain'),
-            '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
-            '#type' => 'textfield',
-            '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+          '#title' => t('Cookie\'s Domain'),
+          '#description' => t('Set the DEV domain name that eWinery DEV will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
+          '#type' => 'textfield',
+          '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
         );
+        break;
+
+        case 'test':
+        $form['enviromentsettings']['agegate_show'] = array(
+          '#title' => t('Show On Test'),
+          '#type' => 'checkbox',
+          '#default_value' => variable_get('agegate_show',0),
+        );
+        $form['enviromentsettings']['agegate_cookiedomain'] = array(
+          '#title' => t('Cookie\'s Domain'),
+          '#description' => t('Set the TEST domain name that eWinery TEST will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
+          '#type' => 'textfield',
+          '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+        );
+        break;
+
+        case 'live':
+        $form['enviromentsettings']['agegate_show'] = array(
+          '#title' => t('Show On Live'),
+          '#type' => 'checkbox',
+          '#default_value' => variable_get('agegate_show',1),
+          '#disabled' => TRUE,
+        );
+        $form['enviromentsettings']['agegate_cookiedomain'] = array(
+          '#title' => t('Cookie\'s Domain'),
+          '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
+          '#type' => 'textfield',
+          '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+        );
+        break;
+      }
+    }else{
+      $form['enviromentsettings']['agegate_show'] = array(
+        '#title' => t('Show On Live'),
+        '#type' => 'checkbox',
+        '#default_value' => variable_get('agegate_show',0),
+      );
+      $form['enviromentsettings']['agegate_cookiedomain'] = array(
+        '#title' => t('Cookie\'s Domain'),
+        '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recomended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
+        '#type' => 'textfield',
+        '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+      );
     }
 
     // LOGO
     $form['logo'] = array(
-        '#title' => t('Logo'),
-        '#description' => t('Logo specific settings'),
-        '#type' => 'fieldset',
-        '#collapsible' => TRUE,
-        '#collapsed'=> FALSE,
+      '#title' => t('Logo'),
+      '#description' => t('Logo specific settings'),
+      '#type' => 'fieldset',
+      '#collapsible' => TRUE,
+      '#collapsed'=> FALSE,
     );
     $form['logo']['agegate_logoshow'] = array(
-        '#title' => t('Logo'),
-        '#description' => t('Check to display the site logo in the Agegate'),
-        '#type' => 'checkbox',
-        '#default' => TRUE,
-        '#default_value' => variable_get('agegate_logoshow',1),
+      '#title' => t('Logo'),
+      '#description' => t('Check to display the site logo in the Agegate'),
+      '#type' => 'checkbox',
+      '#default' => TRUE,
+      '#default_value' => variable_get('agegate_logoshow',1),
     );
     /*
     $form['logo']['agegate_logourl'] = array(
-        '#title' => t('Logo'),
-        '#description' => t('Check to display the site logo in the Agegate'),
-        '#type' => 'textfield',
-        '#default_value' => variable_get('agegate_sitename',variable_get('site_name')),
-    );
-    */
+    '#title' => t('Logo'),
+    '#description' => t('Check to display the site logo in the Agegate'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('agegate_sitename',variable_get('site_name')),
+  );
+  */
 
 
-    // ADVANCED
-    $form['advanced'] = array(
-        '#title' => t('Advanced'),
-        '#description' => t('Extra settings'),
-        '#type' => 'fieldset',
-        '#collapsible' => TRUE,
-        '#collapsed'=> TRUE,
-    );
+  // ADVANCED
+  $form['advanced'] = array(
+    '#title' => t('Advanced'),
+    '#description' => t('Extra settings'),
+    '#type' => 'fieldset',
+    '#collapsible' => TRUE,
+    '#collapsed'=> TRUE,
+  );
 
-    $form['advanced']['agegate_debugmode'] = array(
-        '#title' => t('Debug mode'),
-        '#description' => t('This generates javascript output to the browsers concole. Enabling only affects TEST and DEV enviroments. Also, enabling my cause Internet Explorer to not render the page completly. This is an issue with IE.'),
-        '#type' => 'checkbox',
-        '#default' => FALSE,
-        '#default_value' => variable_get('agegate_debugmode',0),
-    );
+  $form['advanced']['agegate_debugmode'] = array(
+    '#title' => t('Debug mode'),
+    '#description' => t('This generates javascript output to the browsers concole. Enabling only affects TEST and DEV enviroments. Also, enabling my cause Internet Explorer to not render the page completly. This is an issue with IE.'),
+    '#type' => 'checkbox',
+    '#default' => FALSE,
+    '#default_value' => variable_get('agegate_debugmode',0),
+  );
 
-    $form['advanced']['agegate_cookieformat'] = array(
-        '#title' => t('Cookie Format Decoded'),
-        '#description' => t('eWinery requires that the cookie be stored in an encoded format. If for some reason you need the cookie stored in a raw format (decoded) check this box.'),
-        '#type' => 'checkbox',
-        '#default_value' => variable_get('agegate_cookieformat',0),
-    );
+  $form['advanced']['agegate_cookieformat'] = array(
+    '#title' => t('Cookie Format Decoded'),
+    '#description' => t('eWinery requires that the cookie be stored in an encoded format. If for some reason you need the cookie stored in a raw format (decoded) check this box.'),
+    '#type' => 'checkbox',
+    '#default_value' => variable_get('agegate_cookieformat',0),
+  );
 
-    return system_settings_form($form);
+  return system_settings_form($form);
 }
 
 /**
- * Validates agegate_admin_settings_form()
- */
+* Validates agegate_admin_settings_form()
+*/
 function agegate_admin_settings_form_validate($form, &$form_state){
-    //dpm($form_state);
-    /*
-    outputs to screen array of form upon fail
-    */
+  //dpm($form_state);
+  /*
+  outputs to screen array of form upon fail
+  */
 
-    //$form_state['values']
-    /*
-    displays the values of the form.
-    */
+  //$form_state['values']
+  /*
+  displays the values of the form.
+  */
 
-    //form_set_err(string elem_name, t($message))
-    /*
-    on error call the above function on fail;
-    */
+  //form_set_err(string elem_name, t($message))
+  /*
+  on error call the above function on fail;
+  */
 }
