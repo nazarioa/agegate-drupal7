@@ -277,12 +277,14 @@ function agegate_admin_settings_form($node, &$form_state){
     '#default_value' => variable_get('agegate_debugmode', NO),
   );
 
+/*
   $form['advanced']['agegate_cookieformat'] = array(
     '#title' => t('Cookie format decoded'),
     '#description' => t('eWinery requires that the cookie be stored in an encoded format. If for some reason you need the cookie stored in a raw format (decoded) check this box.'),
     '#type' => 'checkbox',
     '#default_value' => variable_get('agegate_cookieformat', ENCODED),
   );
+*/
 
   return system_settings_form($form);
 }

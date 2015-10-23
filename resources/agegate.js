@@ -5,7 +5,6 @@
 function startAgegate(context, setting) {
   //settings brought in from drupal config
   var DEBUG         = Drupal.settings.agegate.debugmode;
-  var COOKIE_FORMAT = Drupal.settings.agegate.cookieformat;
   var COOKIE_DOMAIN = Drupal.settings.agegate.cookiedomain;
   var SITENAME      = Drupal.settings.agegate.sitename;
   var MESSAGE       = Drupal.settings.agegate.sitemessage;
@@ -28,7 +27,7 @@ function startAgegate(context, setting) {
   var cookieValue = '{"ROWCOUNT":1,"COLUMNS":["ISLEGAL","REDIRECTURL"],"DATA":{"ISLEGAL":["1"],"REDIRECTURL":["http://www.centurycouncil.org/"]}}';
 
   if(jQuery.cookie(COOKIE_NAME) == null){
-    if(DEBUG == true) {
+    if(DEBUG === true) {
       console.log("Agegate: Agegate / eWinery cookie not found");
       console.log("Agegate: Displaying Agegate");
     }
@@ -38,7 +37,7 @@ function startAgegate(context, setting) {
 
   // Register event listener for age gate submit button
   jQuery('#olderthan').click(function() {
-    if(DEBUG == true) {
+    if(DEBUG === true) {
       console.log("Agegate: User has confirmed legal age, setting cookie");
       console.log("Agegate: Hiding agegate");
     }
@@ -53,7 +52,7 @@ function startAgegate(context, setting) {
 */
 Drupal.behaviors.agegate = {
   attach: function (context, settings) {
-    if(Drupal.settings.agegate.display == true){
+    if(Drupal.settings.agegate.display === true){
       startAgegate(context, settings);
     }
   }
