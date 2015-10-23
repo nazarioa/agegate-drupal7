@@ -11,8 +11,9 @@ function startAgegate(context, setting){
     var LOGOSHOW      = Drupal.settings.agegate.logoshow;
     var LOGOURL       = Drupal.settings.agegate.logourl;
     var BUTTONTEXT    = Drupal.settings.agegate.buttontext;
+    var DISPLAY    	  = Drupal.settings.agegate.display;
     
-    console.log(LOGOURL);
+    //console.log(LOGOURL);
     
     jQuery.cookie.raw = false;
     var cookie_options = {
@@ -46,6 +47,8 @@ function startAgegate(context, setting){
  */
 Drupal.behaviors.agegate = {
     attach: function (context, settings){
-        startAgegate(context, settings);
+    	if(Drupal.settings.agegate.display == true){
+            startAgegate(context, settings);
+        }
     }
 }

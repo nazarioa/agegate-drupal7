@@ -12,6 +12,21 @@
  */
 function agegate_preprocess_page(&$vars){
     // generate settinsg array for agegate
+    $display = true;
+    switch ($_SERVER['PANTHEON_ENVIRONMENT']){
+        case 'dev':
+            if(variable_get('agegate_showdev') == 0) $display = false;
+            break;
+        case 'test':
+            if(variable_get('agegate_showtest') == 0) $display = false;
+            break;
+        case 'live' :
+            $display = false;
+            break;
+    }
+
+    $display = (user_access('administrator') == 1) ? false : $display;
+
     $settings = array(
         'debugmode'   => variable_get('agegate_debugmode'),
         'cookiedomain'=> variable_get('agegate_cookiedomain'),
@@ -19,17 +34,12 @@ function agegate_preprocess_page(&$vars){
         'sitemessage' => variable_get('agegate_sitemessage'),
         'logoshow'    => variable_get('agegate_logoshow'),
         'logourl'     => theme_get_setting('logo'),
-        'buttontext'    => variable_get('agegate_buttontext'),
+        'buttontext'  => variable_get('agegate_buttontext'),
+        'display'      => $display,
     );
-    
-    //bundle settings for agegate.js
+
     drupal_add_js( array('agegate' => $settings), 'setting');
-    
-    //check to see if you are an administrator
-    if(user_access('administrator') === false){
-        //add agegate.js onto module
-        drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
-    }
+    drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
 }
 
 
@@ -51,7 +61,7 @@ function agegate_help($path, $arg) {
 }
 
 /**
- * Implements hook_permission(). 
+ * Implements hook_permission().
  */
 function agegate_permissions(){
     return array(
@@ -67,16 +77,16 @@ function agegate_permissions(){
  */
 function agegate_menu(){
     $items = array();
-    
+
     // Admin Configuration Group
     // When an admin has logged in -- this creates a group
-    // under the configuration page. 
+    // under the configuration page.
     $items['admin/config/agegate'] = array(
         'title' => 'Agegate',
         'description' => 'Administer Agegate Options',
         'access arguments' => array('administer agegate'),
     );
-    
+
     // Admin configuration - Settings
     // Adds a link under the Admin Configuration Group
     // mentioned in the above block.
@@ -87,7 +97,7 @@ function agegate_menu(){
         'page callback' => 'drupal_get_form',
         'page arguments' => array('agegate_admin_settings_form'),
     );
-    
+
     return $items;
 }
 
@@ -101,7 +111,7 @@ function agegate_admin_settings_form($node, &$form_state){
         '#prefix' => '<p>',
         '#suffix' => '</p>'
     );
-    
+
     // GENERAL
     $form['general'] = array(
         '#title' => t('General Settings'),
@@ -132,7 +142,26 @@ function agegate_admin_settings_form($node, &$form_state){
         '#type' => 'textfield',
         '#default_value' => variable_get(t('agegate_buttontext'),t('Submit')),
     );
-    
+
+    //Display
+    if(isset($_SERVER['PANTHEON_ENVIRONMENT'])){
+    $form['enviromentsettings'] = array(
+        '#title' => t('Enviroment Settings'),
+        '#type' => 'fieldset',
+        '#collapsible' => FALSE,
+    );
+    $form['enviromentsettings']['agegate_showdev'] = array(
+        '#title' => t('Show On Dev'),
+        '#type' => 'checkbox',
+        '#default_value' => variable_get('agegate_showdev',0),
+    );
+    $form['enviromentsettings']['agegate_showtest'] = array(
+        '#title' => t('Show On Test'),
+        '#type' => 'checkbox',
+        '#default_value' => variable_get('agegate_showtest',0),
+    );
+    }
+
     // LOGO
     $form['logo'] = array(
         '#title' => t('Logo'),
@@ -157,7 +186,7 @@ function agegate_admin_settings_form($node, &$form_state){
     );
     */
 
-    
+
     // ADVANCED
     $form['advanced'] = array(
         '#title' => t('Advanced'),
@@ -166,7 +195,7 @@ function agegate_admin_settings_form($node, &$form_state){
         '#collapsible' => TRUE,
         '#collapsed'=> TRUE,
     );
-    
+
     $form['advanced']['agegate_debugmode'] = array(
         '#title' => t('Debug mode'),
         '#description' => t('This generates javascript output to the browsers concole. Enabling only affects TEST and DEV enviroments. Also, enabling my cause Internet Explorer to not render the page completly. This is an issue with IE.'),
@@ -174,14 +203,14 @@ function agegate_admin_settings_form($node, &$form_state){
         '#default' => FALSE,
         '#default_value' => variable_get('agegate_debugmode',0),
     );
-    
+
     $form['advanced']['agegate_cookieformat'] = array(
         '#title' => t('Cookie Format Decoded'),
         '#description' => t('eWinery requires that the cookie be stored in an encoded format. If for some reason you need the cookie stored in a raw format (decoded) check this box.'),
         '#type' => 'checkbox',
         '#default_value' => variable_get('agegate_cookieformat',0),
     );
-    
+
     return system_settings_form($form);
 }
 
@@ -193,12 +222,12 @@ function agegate_admin_settings_form_validate($form, &$form_state){
     /*
     outputs to screen array of form upon fail
     */
-    
+
     //$form_state['values']
     /*
     displays the values of the form.
     */
-    
+
     //form_set_err(string elem_name, t($message))
     /*
     on error call the above function on fail;
