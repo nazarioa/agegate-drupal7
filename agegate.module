@@ -288,3 +288,23 @@ function agegate_admin_settings_form($node, &$form_state){
 
   return system_settings_form($form);
 }
+
+
+/**
+* Implements hook_form_validate().
+*/
+function agegate_admin_settings_form_validate($form, &$form_state) {
+  //Check that the domain is valid -- we have a very loose definition
+  $cookie_domain = $form_state['values']['agegate_cookiedomain'];
+  $grep = '/(^\.[A-Za-z0-9\-\_]+)(\.[A-Za-z0-9\-\_]+)+$/';
+  if(preg_match($grep, $cookie_domain) == NO){
+    form_set_error('agegate_cookiedomain', t('You have added an invalid domain name.'));
+  }
+
+  //Check that the domain is valid
+  $legal_age = $form_state['values']['agegate_legalage'];
+  $grep = '/^[0-9]+$/';
+  if(preg_match($grep, $legal_age) == NO){
+    form_set_error('agegate_legalage', t('The legal drinking age must be a positive integer.'));
+  }
+}
