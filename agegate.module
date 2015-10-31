@@ -170,13 +170,13 @@ function agegate_admin_settings_form($node, &$form_state){
   // GENERAL //
   $form['general'] = array(
     '#title' => t('General Settings'),
-    '#description' => t('Note that you have greater control over markup if you use the <strong>agegate.tp.php</strong> file found in the module\'s code. Make a copy of the TPL file and palce it in your theme\'s folder.'),
+    '#description' => t('Note that you have greater control over markup if you use the <strong>agegate--popup.tpl.php</strong> file found in the module\'s code. Make a copy of the TPL file and place it in your theme\'s folder.'),
     '#type' => 'fieldset',
     '#collapsible' => FALSE,
   );
   $form['general']['agegate_sitename'] = array(
     '#title' => t('Website Name'),
-    '#description' => t('How would you like your websites name to display on the agegate'),
+    '#description' => t('How would you like your websites name to display on the agegate.'),
     '#type' => 'textfield',
     '#default_value' => variable_get('agegate_sitename',variable_get('site_name')),
   );
@@ -188,13 +188,13 @@ function agegate_admin_settings_form($node, &$form_state){
   );
   $form['general']['agegate_verifybtntext'] = array(
     '#title' => t('Verify Button Text'),
-    '#description' => t('Text of the verify button'),
+    '#description' => t('Text of the verify button.'),
     '#type' => 'textfield',
     '#default_value' => variable_get(t('agegate_verifybtntext'),t('Verify')),
   );
   $form['general']['agegate_cancelbtntext'] = array(
     '#title' => t('Cancel Button Text'),
-    '#description' => t('Text of the cancel button'),
+    '#description' => t('Text of the cancel button.'),
     '#type' => 'textfield',
     '#default_value' => variable_get(t('agegate_cancelbtntext'),t('Cancel')),
   );
@@ -299,14 +299,14 @@ function agegate_admin_settings_form($node, &$form_state){
   );
   $form['advanced']['agegate_debugmode'] = array(
     '#title' => t('Debug mode'),
-    '#description' => t('This generates javascript output to the browsers concole. Enabling only affects TEST and DEV enviroments. Also, enabling my cause Internet Explorer to not render the page completly. This is an issue with IE.'),
+    '#description' => t('This generates javascript output to the browsers console. Enabling only affects TEST and DEV enviroments. Also, enabling my cause oldr version of Internet Explorer to not render the page completly. This is an issue with IE.'),
     '#type' => 'checkbox',
     '#default' => FALSE,
     '#default_value' => variable_get('agegate_debugmode', NO),
   );
   $form['advanced']['agegate_cookiename'] = array(
     '#title' => t('Cookie Name'),
-    '#description' => t('Set the cookie name. Ewinery looks for a cookie named "ISLEGAL"' ),
+    '#description' => t('Set the cookie name. Ewinery looks for a cookie named "ISLEGAL". You probobly don\'t need to change this.' ),
     '#type' => 'textfield',
     '#default_value' => variable_get('agegate_cookiename','ISLEGAL'),
   );
