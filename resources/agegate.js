@@ -9,8 +9,6 @@ function startAgegate(context, setting) {
   var COOKIE_DOMAIN = Drupal.settings.agegate.cookiedomain;
   var COOKIE_NAME   = Drupal.settings.agegate.cookiename;
   var COOKIE_FORMAT = Drupal.settings.agegate.cookieformat;
-  var VERIFY_BTN_TEXT = Drupal.settings.agegate.verifybtntext;
-  var CANCEL_BTN_TEXT = Drupal.settings.agegate.cancelbtntext;
   var CANCEL_URL    = Drupal.settings.agegate.cancelurl;
   var DISPLAY    	  = Drupal.settings.agegate.displaypopup;
   var LEGALAGE      = Drupal.settings.agegate.legalage;
@@ -27,7 +25,7 @@ function startAgegate(context, setting) {
     "domain" : COOKIE_DOMAIN
   }
   // var COOKIE_NAME = 'ISLEGAL';
-  var agegateHtmlWrapper = '<div id="agegate" style="display:block"><div class="agegate-message">' + TPLHTML + '<div class="buttonBar"><button id="agegateCancel" class="button verify-age">' + CANCEL_BTN_TEXT + '</button><button id="agegateVerify" class="button verify-age">' + VERIFY_BTN_TEXT + '</button></div></div></div>';
+  var agegateHtmlWrapper = '<div id="agegate" style="display:block"><div class="agegate-message">' + TPLHTML + '</div></div>';
 
   var cookieValue = '{"ROWCOUNT":1,"COLUMNS":["ISLEGAL","REDIRECTURL"],"DATA":{"ISLEGAL":["1"],"REDIRECTURL":["' + CANCEL_URL + '"]}}';
 
@@ -66,7 +64,7 @@ function startAgegate(context, setting) {
 */
 Drupal.behaviors.agegate = {
   attach: function (context, settings) {
-    if(Drupal.settings.agegate.displaypopup === true){
+    if( Drupal.settings.agegate.displaypopup === 1 ){
       startAgegate(context, settings);
     }
   }
