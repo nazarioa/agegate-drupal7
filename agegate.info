@@ -6,6 +6,9 @@ description = This module creates an agegate. Visitors to the site must confirm 
 core = 7.x
 version = 7.x-1.0
 configure = admin/config/agegate/manage
+dependencies[] = jquery_update
+
 stylesheets[all][] = resources/agegate.css
-scripts[] = resources/jquery.cookie-1.3.js
+
+scripts[] = vendor/jquery.cookie-1.3.js
 scripts[] = resources/agegate.js
