@@ -23,7 +23,7 @@
    padding:  20px;
    margin: 15% auto;
    text-align: center;
-   
+
    -moz-border-radius: 7px;
    border-radius: 7px;
 }
@@ -36,7 +36,7 @@
    font-weight: bold;
 }
 
-#agegate .button.verify-age{
+#agegate .button{
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -59,14 +59,14 @@
 	margin-top: 20px;
 }
 
-#agegate .button.verify-age:hover {
+#agegate .button:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
 	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
 	background-color:#dfdfdf;
 }
 
-#agegate .button.verify-age:active {
+#agegate .button:active {
 	position:relative;
 	top:1px;
 }

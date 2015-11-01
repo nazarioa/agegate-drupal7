@@ -40,7 +40,7 @@ function startAgegate(context, setting) {
   }
 
   // Register event listener for age gate submit button
-  jQuery('#agegateVerify').click(function() {
+  jQuery('#agegate_verify').click(function() {
     if(DEBUG === 1) {
       console.log("Agegate: user's age is: " + jQuery('#agegate-userage').val() );
       console.log("Agegate: User has confirmed legal age, setting cookie");
@@ -51,7 +51,7 @@ function startAgegate(context, setting) {
     jQuery('#agegate').css('display','none');
   });
 
-  jQuery('#agegateCancel').click(function() {
+  jQuery('#agegate_cancel').click(function() {
     if(DEBUG === 1) {
       console.log("Agegate: User has canceled.");
     }
