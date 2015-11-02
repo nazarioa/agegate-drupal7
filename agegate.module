@@ -398,8 +398,10 @@ function agegate_theme($existing, $type, $theme, $path) {
 */
 function agegate__verification_box_html($verifcationtype = 1, $options){
   if($verifcationtype == 1){
+    $maxdate = $options['age'] - 1;
+
     drupal_add_library('system','ui.datepicker');
-    drupal_add_js('jQuery(document).ready(function(){jQuery( "#agegate_birthday" ).datepicker({dateFormat: "mm/dd/yy", autoSize: true});});', 'inline');
+    drupal_add_js('jQuery(document).ready(function(){jQuery( "#agegate_birthday" ).datepicker({dateFormat: "mm/dd/yy", autoSize: true, changeYear: true, maxDate: "-' . $maxdate . 'y"});});', 'inline');
     return '<div><input type="text" class="datepicker" id="agegate_birthday"/></div>';
   }
   elseif($verifcationtype == 2){
