@@ -2,13 +2,16 @@
 ; Date Feb 14th 2013
 
 name = Agegate
-description = This module creates an agegate. Visitors to the site must confirm their age as being over 21 in order to proceed visiting the site.
+description = This module creates an age gate (Date Validator). Visitors to the site must confirm their age as being over 21 in order to proceed visiting the site.
 core = 7.x
 version = 7.x-1.0
 configure = admin/config/agegate/manage
 dependencies[] = jquery_update
+dependencies[] = date
+dependencies[] = date_popup
+dependencies[] = date_picker
 
 stylesheets[all][] = resources/agegate.css
 
-scripts[] = vendor/jquery.cookie-1.3.js
+scripts[] = resources/jquery.cookie-1.3.js
 scripts[] = resources/agegate.js
