@@ -22,12 +22,14 @@ define('NO', 0);
 * hook_preprocess_page()
 *
 * This function will be called for every page load.
-* On every page load this module will check to see if the agegate should be displayed
+* On every page load this module will check to see
+* if the agegate should be displayed.
 */
 function agegate_preprocess_page(&$vars){
 
   // Going through the module configuration settings
-  // to see if the agegate should be or not dispalyed on the current page.
+  // to see if the agegate should be or not dispalyed
+  // on the current page.
 
   // Setting inital flags
   $display = YES;
@@ -53,7 +55,8 @@ function agegate_preprocess_page(&$vars){
       $display = YES;
       break;
     }
-  }else{
+  }
+  else{
     if(variable_get('agegate_show') == HIDE){
       $display = NO;
     }
@@ -61,6 +64,15 @@ function agegate_preprocess_page(&$vars){
 
   if( user_access('administrator') == YES ){
     $display = NO;
+  }
+
+  // Is the current page one of the pages where the Agegate not be dispalyed
+  $current_path = trim(request_path());
+  $hide_from = array_map('trim', explode("\n", variable_get('agegate_hidefrom')));
+  if( in_array($current_path, $hide_from) ){
+    $display = NO;
+    // Current page is in the "do not display agegate on this page"
+    // list so lets set dispaly to no.
   }
 
   $settings = array(
@@ -76,18 +88,17 @@ function agegate_preprocess_page(&$vars){
 
   $settings['popuphtml'] = theme('preprocess_method', array(
     'agegate'=> array(
-      'validate_box'  => '<div>A</div>',
+      'validate_box'  => agegate__verification_box_html($settings['verifcationtype'] , array('age' => $settings['legalage'] )),
       'name'          => t(variable_get('agegate_sitename')),
       'message'       => t(variable_get('agegate_sitemessage')),
-      'cancel_button' => '<button id="agegateCancel" class="button verify-age">' . t(variable_get('agegate_cancelbtntext')) . '</button>',
-      'verify_button' => '<button id="agegateVerify" class="button verify-age">' . t(variable_get('agegate_verifybtntext')) . '</button>',
+      'cancel_button' => '<button id="agegate_cancel" class="button cancel-verify">' . t(variable_get('agegate_cancelbtntext')) . '</button>',
+      'verify_button' => '<button id="agegate_verify" class="button age-verify">' . t(variable_get('agegate_verifybtntext')) . '</button>'
     )
   ));
 
   drupal_add_js( array('agegate' => $settings), 'setting');
   drupal_add_js( drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
 }
-
 
 /**
 * Implements hook_help().
@@ -109,7 +120,6 @@ function agegate_help($path, $arg) {
 /**
 * Implements hook_permission().
 */
-
 function agegate_permission(){
   return array(
     'admin agegate settings' => array(
@@ -210,8 +220,8 @@ function agegate_admin_settings_form($node, &$form_state){
     '#type' => 'select',
     '#default_value' => variable_get('agegate_verifcationtype'),
     '#options' => array(
-      1 => t('Supply Birthday'),
-      2 => t('Answer Question'),
+      1 => t('Prompt user for birthday'),
+      2 => t('Prompt user with a yes / no question'),
     ),
   );
   $form['general']['agegate_legalage'] = array(
@@ -221,11 +231,23 @@ function agegate_admin_settings_form($node, &$form_state){
     '#default_value' => variable_get('agegate_legalage', 21),
   );
 
-  // Display //
+  // Enviroment Settings //
   $form['enviromentsettings'] = array(
     '#title' => t('Enviroment Settings'),
     '#type' => 'fieldset',
     '#collapsible' => FALSE,
+  );
+  $hidefrom_defaults = array(
+    'contact-us',
+    'privacy-policy',
+    'terms-and-conditions',
+    'node/example',
+  );
+  $form['enviromentsettings']['agegate_hidefrom'] = array(
+    '#title' => t('Do Not Display Agegate On These Pages'),
+    '#description' => t('What pages would you like the Agegate to NOT dispaly on? Do not include website domain or  trailing slash.'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('agegate_hidefrom', implode("\n", $hidefrom_defaults) ),
   );
 
   if(isset($_SERVER['PANTHEON_ENVIRONMENT'])){
@@ -326,6 +348,7 @@ function agegate_admin_settings_form($node, &$form_state){
 */
 function agegate_admin_settings_form_validate($form, &$form_state) {
   // Check that the domain is valid -- we have a very loose definition
+  // for a valid cookie domain name.
   // A valid cookie domain consist of a string starting with a period "." and
   // having at least one more period after it and having as its only other
   // characters "a" through "z", "A" through "Z", and underscore "_" and a
@@ -367,6 +390,21 @@ function agegate_theme($existing, $type, $theme, $path) {
     ),
   );
   return $result;
+}
+
+
+/**
+* Generates the HTML for the verification box based on the what the administrator has set.
+*/
+function agegate__verification_box_html($verifcationtype = 1, $options){
+  if($verifcationtype == 1){
+    drupal_add_library('system','ui.datepicker');
+    drupal_add_js('jQuery(document).ready(function(){jQuery( "#agegate_birthday" ).datepicker({dateFormat: "mm/dd/yy", autoSize: true});});', 'inline');
+    return '<div><input type="text" class="datepicker" id="agegate_birthday"/></div>';
+  }
+  elseif($verifcationtype == 2){
+    return '<input type="hidden" value="' . $options['age'] . '" id="agegate_birthday">';
+  }
 }
 
 ?>
