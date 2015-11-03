@@ -9,7 +9,6 @@ configure = admin/config/agegate/manage
 dependencies[] = jquery_update
 dependencies[] = date
 dependencies[] = date_popup
-dependencies[] = date_picker
 
 stylesheets[all][] = resources/agegate.css
 
