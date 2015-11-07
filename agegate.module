@@ -412,5 +412,3 @@ function agegate__verification_box_html($verifcationtype = 1, $options){
     return '<input type="hidden" value="' . $options['age'] . '" id="agegate_birthday">';
   }
 }
-
-?>
