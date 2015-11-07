@@ -114,8 +114,8 @@ function agegate_help($path, $arg) {
   switch($path) {
     case 'admin/help#agegate':
     {
-      $output = '<h3>'.t('About').'</h3>';
-      $output += '<p>'.t('This module creates an agegate. Visitors to the site must confirm their age as being over 21 in order to proceed visiting the site.').'</p>';
+      $output = '<h3>' . t('About') . '</h3>';
+      $output += '<p>' . t('This module creates an agegate. Visitors to the site must confirm their age as being over 21 in order to proceed visiting the site.') . '</p>';
       return $output;
       break;
     }
