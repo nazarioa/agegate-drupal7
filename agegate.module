@@ -1,9 +1,11 @@
 <?php
 /**
  * @file
- * This module generates an Agegate (age verification) which prompts a visitor
- * for their age. If they are of legal drinking age then the Agegate will
- * deposit a cookie in the browser.
+ * Generates an age verification screen before admitting user to the site.
+ *
+ * If the user validates their age either by supplying a birthday or affirming
+ * that they are of a legal age then the age gate will deposit a cookie in the
+ * browser and allow the user to continue onto the site.
  *
  * This was developed by Nazario A. Ayala (Niztech) On Febuary 14th, 2013
  * This was updated by Nazario A. Ayala (Niztech) On October 24th, 2015
@@ -30,7 +32,7 @@ function agegate_preprocess_page(&$vars) {
   // Going through the module configuration settings
   // to see if the agegate should be or not dispalyed
   // on the current page.
-
+  //
   // Setting initial flags.
   $display = AGEGATE_YES;
   $environment = 'live';
