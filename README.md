@@ -70,7 +70,7 @@ as this can break IE.</li>
 <li><strong><code>SITENAME</code></strong> - Human readable name of your site</li>
 <li><strong><code>MESSAGE</code></strong> - Message displayed to the end user.
 <br><strong>NOTE:</strong> The message added here is wrapped in p tags</li>
-<li><strong><code>SHOWLOGO</code></strong> - If checked the default site logo
+<li><strong><code>AGEGATE_SHOWLOGO</code></strong> - If checked the default site logo
 file will be, otherwise no image will be loaded.</li>
 </ol>
 </div>
@@ -95,7 +95,7 @@ is printed to the JS console. It should be left to unchecked on production sites
 <li><strong><code>SITENAME</code></strong> - Human readable name of your site</li>
 <li><strong><code>MESSAGE</code></strong> - Message displayed to the end user.
 <br><strong>NOTE:</strong> The message added here is wrapped in p tags</li>
-<li><strong><code>SHOWLOGO</code></strong> - If checked the default site
+<li><strong><code>AGEGATE_SHOWLOGO</code></strong> - If checked the default site
 logofile will be, otherwise no image will be loaded.</li>
 </ol>
 
