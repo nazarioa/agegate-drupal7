@@ -32,7 +32,7 @@ function agegate_preprocess_page(&$vars) {
   // Going through the module configuration settings
   // to see if the agegate should be or not dispalyed
   // on the current page.
-  //
+
   // Setting initial flags.
   $display = AGEGATE_YES;
   $environment = 'live';
@@ -42,23 +42,23 @@ function agegate_preprocess_page(&$vars) {
 
     switch ($environment) {
       case 'dev':
-      if (variable_get('agegate_show') == AGEGATE_HIDE) {
-        $display = AGEGATE_NO;
-      }
-      break;
+        if (variable_get('agegate_show') == AGEGATE_HIDE) {
+          $display = AGEGATE_NO;
+        }
+        break;
 
       case 'test':
-      if (variable_get('agegate_show') == AGEGATE_HIDE) {
-        $display = AGEGATE_NO;
-      }
-      break;
+        if (variable_get('agegate_show') == AGEGATE_HIDE) {
+          $display = AGEGATE_NO;
+        }
+        break;
 
       case 'live':
-      $display = AGEGATE_YES;
-      break;
+        $display = AGEGATE_YES;
+        break;
     }
   }
-  else{
+  else {
     if (variable_get('agegate_show') == AGEGATE_HIDE) {
       $display = AGEGATE_NO;
     }
@@ -90,17 +90,17 @@ function agegate_preprocess_page(&$vars) {
     'verifcationtype' => variable_get('agegate_verifcationtype'),
     'displaypopup'    => $display,
     'legalage'        => variable_get('agegate_legalage'),
- );
+  );
 
   $settings['popuphtml'] = theme('preprocess_method', array(
     'agegate' => array(
       'validate_box'  => agegate__verification_box_html($settings['verifcationtype'] , array('age' => $settings['legalage'])),
-      'name'          => t(variable_get('agegate_sitename')),
-      'message'       => t(variable_get('agegate_sitemessage')),
-      'cancel_button' => '<button id="agegate_cancel" class="button cancel-verify">' . t(variable_get('agegate_cancelbtntext')) . '</button>',
-      'verify_button' => '<button id="agegate_verify" class="button age-verify">' . t(variable_get('agegate_verifybtntext')) . '</button>'
-   )
- ));
+      'name'          => variable_get('agegate_sitename'),
+      'message'       => variable_get('agegate_sitemessage'),
+      'cancel_button' => '<button id="agegate_cancel" class="button cancel-verify">' . variable_get('agegate_cancelbtntext') . '</button>',
+      'verify_button' => '<button id="agegate_verify" class="button age-verify">' . variable_get('agegate_verifybtntext') . '</button>',
+    )
+  ));
 
   drupal_add_js(array('agegate' => $settings), 'setting');
   drupal_add_js(drupal_get_path('module', 'agegate') . '/resources/agegate.js', 'file');
@@ -165,13 +165,6 @@ function agegate_menu() {
   return $items;
 }
 
-/**
- * Implements hook_enable().
- */
-function agegate_enable() {
-  //enable administrators access by defualt.
-  user_role_grant_permissions(3, array('admin agegate settings'), 'agegate');
-}
 
 /**
  * Implements hook_form().
@@ -181,10 +174,10 @@ function agegate_admin_settings_form($node, &$form_state) {
   $form['overview'] = array(
     '#markup' => t('This interface allows administrators to manage settings for the Agegate.'),
     '#prefix' => '<p>',
-    '#suffix' => '</p>'
+    '#suffix' => '</p>',
  );
 
-  // GENERAL //
+  // GENERAL
   $form['general'] = array(
     '#title' => t('General Settings'),
     '#description' => t('Note that you have greater control over markup if you use the <strong>agegate--popup.tpl.php</strong> file found in the module\'s code. Make a copy of the TPL file and place it in your theme\'s folder.'),
@@ -238,7 +231,7 @@ function agegate_admin_settings_form($node, &$form_state) {
     '#default_value' => variable_get('agegate_legalage', 21),
  );
 
-  // Environment Settings //
+  // Environment Settings
   $form['environmentsettings'] = array(
     '#title' => t('environment Settings'),
     '#type' => 'fieldset',
@@ -305,7 +298,7 @@ function agegate_admin_settings_form($node, &$form_state) {
       break;
     }
   }
-  else{
+  else {
     $form['environmentsettings']['agegate_show'] = array(
       '#title' => t('Show On Live'),
       '#type' => 'checkbox',
@@ -319,7 +312,7 @@ function agegate_admin_settings_form($node, &$form_state) {
    );
   }
 
-  // ADVANCED //
+  // ADVANCED
   $form['advanced'] = array(
     '#title' => t('Advanced'),
     '#type' => 'fieldset',
@@ -360,12 +353,12 @@ function agegate_admin_settings_form_validate($form, &$form_state) {
   // having at least one more period after it and having as its only other
   // characters "a" through "z", "A" through "Z", and underscore "_" and a
   // hyphon "-".
-  //
+
   // Example of Valid:
   // .domain.com
   // .domain_with.crazy-extension
   // .local.dev.domain.com
-  //
+
   // Examples of Inavlid:
   // .com (must have two periods).
   // test.domain.com (must start with a period).

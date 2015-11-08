@@ -1,0 +1,8 @@
+<?php
+/**
+ * Implements hook_enable().
+ */
+function agegate_enable() {
+  // Enable administrators access by defualt.
+  user_role_grant_permissions(3, array('admin agegate settings'), 'agegate');
+}
