@@ -14,7 +14,7 @@
       /**
        * AgeGate function.
        */
-      function startAgegate (context, setting) {
+      function startAgegate(context, setting) {
 
         // Settings brought in from drupal config.
         var VERIFICATIONTYPE = Drupal.settings.agegate.verifcationtype;
@@ -35,8 +35,8 @@
         var cookie_options = {
           expires: 1,
           path: '/',
-          domain : COOKIE_DOMAIN
-        }
+          domain: COOKIE_DOMAIN
+        };
 
         var agegateHtmlWrapper = '<div id="agegate" style="display: block"><div class="agegate-message">' + TPLHTML + '</div></div>';
         var cookieValue = '{"ROWCOUNT": 1, "COLUMNS": ["ISLEGAL", "REDIRECTURL"], "DATA":{"ISLEGAL": ["1"], "REDIRECTURL": ["' + CANCEL_URL + '"]}}';
@@ -47,7 +47,7 @@
         }
 
         // Register event listener for age gate submit button.
-        $('#agegate_verify').click(function() {
+        $('#agegate_verify').click(function () {
           if (validate() === true) {
             $.cookie(COOKIE_NAME, cookieValue, cookie_options);
             $('#agegate').css('display', 'none');
@@ -55,13 +55,13 @@
         });
 
         // Register event listener for age gate cancel button.
-        $('#agegate_cancel').click(function() {
+        $('#agegate_cancel').click(function () {
           window.location = CANCEL_URL;
         });
 
         // Age Validation Logic.
-        function validate () {
-          if (VERIFICATIONTYPE == 1) {
+        function validate() {
+          if (VERIFICATIONTYPE === '1') {
             var cutoff = new Date();
             cutoff.setFullYear(cutoff.getFullYear() - LEGALAGE);
             var birthday = new Date($('#agegate_birthday').val());
@@ -73,11 +73,11 @@
               return false;
             }
           }
-          else if (VERIFICATIONTYPE == 2) {
+          else if (VERIFICATIONTYPE === '2') {
             return true;
           }
         }
       }
     }
-  }
+  };
 })(jQuery);
