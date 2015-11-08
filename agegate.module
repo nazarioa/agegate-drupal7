@@ -383,8 +383,9 @@ function agegate_theme($existing, $type, $theme, $path) {
 
 
 /**
- * Generates the HTML for the verification box based on
- * the what the administrator has set.
+ * Generates HTML for the verification box.
+ *
+ * This is based on the what the administrator has set for verification type.
  */
 function agegate__verification_box_html($verifcationtype, $options) {
   if ($verifcationtype == 1) {
