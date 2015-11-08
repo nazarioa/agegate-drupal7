@@ -1,3 +1,4 @@
+<?php
 /**
  * @file
  * Displays the Agegate.
@@ -15,6 +16,7 @@
  *
  * @ingroup themeable
  */
+ ?>
 
 <!-- start agegate__popup.tpl.php -->
 <div class="title">
@@ -22,7 +24,7 @@
   <?php echo $agegate['name']; ?>
 </div>
 <!-- legal message - not-required -->
-<?php echo $agegate['message']; ?>
+<div class="message"><?php echo $agegate['message']; ?></div>
 <!-- validation button code - REQUIRED -->
 <?php echo $agegate['validate_box']; ?>
 

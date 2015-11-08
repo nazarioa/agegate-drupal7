@@ -27,6 +27,11 @@
   border-radius: 7px;
 }
 
+
+#agegate .agegate-message > div{
+  padding: .5em 0 .5em 0;
+}
+
 #agegate .title {
   text-align: center;
   font-size: 16px;
@@ -71,11 +76,14 @@
 }
 
 #agegate_birthday {
-  width: inherit;
+  position: relative;
+  display: block;
+  width: 70%;
   font-size: 1.2em;
   background-color: #f6f6f6;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin: 1em auto 1em auto;
   padding: .5em;
   border: none;
+  text-align: center;
+  border-bottom: 2px solid #595959;
 }
