@@ -39,6 +39,11 @@
         $('#agegate_verify').click(function () {
           if (validate() === true) {
             var cookieValue = '{"ROWCOUNT": 1, "COLUMNS": ["ISLEGAL", "REDIRECTURL"], "DATA":{"ISLEGAL": ["1"], "REDIRECTURL": ["' + CANCEL_URL + '"]}}';
+            console.log(COOKIE_FORMAT);
+            if(COOKIE_FORMAT === '1'){
+              cookieValue = escape(cookieValue);
+            }
+
             Cookie.set(COOKIE_NAME, cookieValue, COOKIE_DOMAIN, 1);
             $('#agegate').css('display', 'none');
           }
