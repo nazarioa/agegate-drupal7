@@ -396,7 +396,7 @@ function agegate__verification_box_html($verifcationtype, $options) {
   elseif ($verifcationtype == 2) {
     return '<input type="hidden" value="' . $options['age'] . '" id="agegate_birthday">';
   }
-  else{
-    return false;
+  else {
+    return FALSE;
   }
 }
