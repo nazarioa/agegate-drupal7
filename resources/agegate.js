@@ -47,7 +47,7 @@
         }
 
         // Register event listener for age gate submit button.
-        $('#agegate_verify').click (function () {
+        $('#agegate_verify').click(function() {
           if (validate() === true) {
             $.cookie(COOKIE_NAME, cookieValue, cookie_options);
             $('#agegate').css('display', 'none');
@@ -55,7 +55,7 @@
         });
 
         // Register event listener for age gate cancel button.
-        $('#agegate_cancel').click (function () {
+        $('#agegate_cancel').click(function() {
           window.location = CANCEL_URL;
         });
 
