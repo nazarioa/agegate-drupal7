@@ -21,7 +21,6 @@
        * @param {string} setting - An array with settings used by
        *  sent by hook_preprocess_page.
        */
-       
       function startAgegate(context, setting) {
 
         // Settings brought in from drupal config.
