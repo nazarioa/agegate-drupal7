@@ -92,8 +92,8 @@
         }
 
         if (c.indexOf(nameEQ) == 0){
-          return c.substring(nameEQ.length, c.length
-        });
+          return c.substring(nameEQ.length, c.length);
+        }
       }
       return null;
     },
