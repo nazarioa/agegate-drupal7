@@ -17,8 +17,8 @@
       /**
        * AgeGate function.
        *
-       * @param {string} context - The DOM as sent by drupal?
-       * @param {string} setting - An array with settings used by
+       * @param {object} context - The DOM as sent by drupal?
+       * @param {array} setting - An array with settings used by
        *  sent by hook_preprocess_page.
        */
       function startAgegate(context, setting) {
