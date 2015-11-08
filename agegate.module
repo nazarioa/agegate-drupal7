@@ -191,19 +191,19 @@ function agegate_admin_settings_form($node, &$form_state) {
     '#title' => t('Legal Message'),
     '#description' => t('Set the legal verbage that the user sees.'),
     '#type' => 'textarea',
-    '#default_value' => variable_get(t('agegate_sitemessage'),t('By clicking SUBMIT you verify that you are 21 years of age or older.')),
+    '#default_value' => variable_get(t('agegate_sitemessage'), t('By clicking SUBMIT you verify that you are 21 years of age or older.')),
   );
   $form['general']['agegate_verifybtntext'] = array(
     '#title' => t('Verify Button Text'),
     '#description' => t('Text of the verify button.'),
     '#type' => 'textfield',
-    '#default_value' => variable_get(t('agegate_verifybtntext'),t('Verify')),
+    '#default_value' => variable_get(t('agegate_verifybtntext'), t('Verify')),
   );
   $form['general']['agegate_cancelbtntext'] = array(
     '#title' => t('Cancel Button Text'),
     '#description' => t('Text of the cancel button.'),
     '#type' => 'textfield',
-    '#default_value' => variable_get(t('agegate_cancelbtntext'),t('Cancel')),
+    '#default_value' => variable_get(t('agegate_cancelbtntext'), t('Cancel')),
   );
   $form['general']['agegate_cancelurl'] = array(
     '#title' => t('Cancel URL'),
@@ -261,7 +261,7 @@ function agegate_admin_settings_form($node, &$form_state) {
         '#title' => t("Cookie's Domain"),
         '#description' => t('Set the DEV domain name that eWinery DEV will use. It is recommended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
         '#type' => 'textfield',
-        '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+        '#default_value' => variable_get('agegate_cookiedomain', '.domain.com'),
       );
       break;
 
@@ -275,7 +275,7 @@ function agegate_admin_settings_form($node, &$form_state) {
         '#title' => t("Cookie's Domain"),
         '#description' => t('Set the TEST domain name that eWinery TEST will use. It is recommended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
         '#type' => 'textfield',
-        '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+        '#default_value' => variable_get('agegate_cookiedomain', '.domain.com'),
       );
       break;
 
@@ -290,7 +290,7 @@ function agegate_admin_settings_form($node, &$form_state) {
         '#title' => t("Cookie's Domain"),
         '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recommended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
         '#type' => 'textfield',
-        '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+        '#default_value' => variable_get('agegate_cookiedomain', '.domain.com'),
       );
       break;
     }
@@ -305,7 +305,7 @@ function agegate_admin_settings_form($node, &$form_state) {
       '#title' => t("Cookie's Domain"),
       '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recommended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
       '#type' => 'textfield',
-      '#default_value' => variable_get('agegate_cookiedomain','.domain.com'),
+      '#default_value' => variable_get('agegate_cookiedomain', '.domain.com'),
     );
   }
 
@@ -325,9 +325,9 @@ function agegate_admin_settings_form($node, &$form_state) {
   );
   $form['advanced']['agegate_cookiename'] = array(
     '#title' => t('Cookie Name'),
-    '#description' => t('Set the cookie name. Ewinery looks for a cookie named "ISLEGAL". You probobly don\'t need to change this.'),
+    '#description' => t("Set the cookie name. Ewinery looks for a cookie named \"ISLEGAL\". You probobly don't need to change this."),
     '#type' => 'textfield',
-    '#default_value' => variable_get('agegate_cookiename','ISLEGAL'),
+    '#default_value' => variable_get('agegate_cookiename', 'ISLEGAL'),
   );
   $form['advanced']['agegate_cookieformat'] = array(
     '#title' => t('Cookie format encoded'),
@@ -380,7 +380,7 @@ function agegate_admin_settings_form_validate($form, &$form_state) {
  * Implements hook_theme().
  */
 function agegate_theme($existing, $type, $theme, $path) {
-  $result =  array(
+  $result = array(
     'preprocess_method' => array(
       'render element' => 'element',
       'template' => 'agegate--popup',
