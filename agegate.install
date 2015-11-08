@@ -1,5 +1,10 @@
 <?php
 /**
+ * @file
+ * Baic instalation file for the Agegate module.
+ */
+
+/**
  * Implements hook_enable().
  */
 function agegate_enable() {
