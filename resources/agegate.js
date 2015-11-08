@@ -1,10 +1,11 @@
 /**
-* @file
-* This is the JS file at actually generates the age gate that gets displayed.
-*
-* The validate() function should be modified if there are new VERIFICTAION TYPES
-* declared. The function should return a boolean value.
-*/
+ * @file
+ * This is the JS file at actually generates the age gate that gets displayed.
+ *
+ * The validate() function should be modified if there are new VERIFICTAION TYPES
+ * declared. The function should return a boolean value.
+ */
+
 (function ($) {
   'use strict';
   Drupal.behaviors.agegate = {
@@ -14,8 +15,8 @@
       }
 
       /**
-      * AgeGate function.
-      */
+       * AgeGate function.
+       */
       function startAgegate(context, setting) {
 
         // Settings brought in from drupal config.
@@ -57,7 +58,7 @@
             var result = cutoff - birthday;
             if (result > 0) {
               return true;
-            }else{
+            }else {
               return false;
             }
           }else if (VERIFICATIONTYPE === '2') {
@@ -74,9 +75,9 @@
 
       if (days) {
         date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        expires = "; expires="+date.toGMTString();
-      }else{
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toGMTString();
+      }else {
         expires = "";
       }
       document.cookie = name + "=" + value + expires + "; path=/; domain=" + domain;
@@ -88,9 +89,8 @@
       for (var i = 0; i < ca.length; i++){
         var c = ca[i];
         while (c.charAt(0) == ' '){
-          c = c.substring(1,c.length);
+          c = c.substring(1, c.length);
         }
-
         if (c.indexOf(nameEQ) == 0){
           return c.substring(nameEQ.length, c.length);
         }
