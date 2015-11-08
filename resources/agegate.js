@@ -1,14 +1,19 @@
+/**
+ * @file
+ * This is the JS file at actually generates the age gate that gets displayed.
+ */
+
 (function ($) {
   'use strict';
   Drupal.behaviors.agegate = {
     attach: function (context, settings) {
-      if ( Drupal.settings.agegate.displaypopup === 1 ) {
-        startAgegate (context, settings);
+      if (Drupal.settings.agegate.displaypopup === 1) {
+        startAgegate(context, settings);
       }
 
       /**
-      * AgeGate function
-      */
+       * AgeGate function.
+       */
       function startAgegate (context, setting) {
 
         // Settings brought in from drupal config.
@@ -37,15 +42,15 @@
         var cookieValue = '{"ROWCOUNT": 1, "COLUMNS": ["ISLEGAL", "REDIRECTURL"], "DATA":{"ISLEGAL": ["1"], "REDIRECTURL": ["' + CANCEL_URL + '"]}}';
 
         // Check for presence of the cookie, if none, append the HTML file.
-        if ($.cookie (COOKIE_NAME) == null) {
-          $('body').append (agegateHtmlWrapper);
+        if ($.cookie(COOKIE_NAME) == null) {
+          $('body').append(agegateHtmlWrapper);
         }
 
         // Register event listener for age gate submit button.
         $('#agegate_verify').click (function () {
-          if ( validate () === true ) {
-            $.cookie (COOKIE_NAME, cookieValue, cookie_options);
-            $('#agegate').css ('display', 'none');
+          if (validate() === true) {
+            $.cookie(COOKIE_NAME, cookieValue, cookie_options);
+            $('#agegate').css('display', 'none');
           }
         });
 
@@ -57,9 +62,9 @@
         // Age Validation Logic.
         function validate () {
           if (VERIFICATIONTYPE == 1) {
-            var cutoff = new Date ();
-            cutoff.setFullYear (cutoff.getFullYear () - LEGALAGE );
-            var birthday = new Date ( $('#agegate_birthday').val () );
+            var cutoff = new Date();
+            cutoff.setFullYear(cutoff.getFullYear() - LEGALAGE);
+            var birthday = new Date($('#agegate_birthday').val());
             var result = cutoff - birthday;
             if (result > 0) {
               return true;
