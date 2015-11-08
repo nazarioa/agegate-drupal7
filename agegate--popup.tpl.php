@@ -3,7 +3,7 @@
  * Displays the Agegate.
  *
  * Available variables:
- * - $agegate (array): Contains all the variables avilable to the Agegare
+ * - $agegate (array): Contains all the variables available to the Agegare
  *   - $agegate['name']: Title set in the settings.
  *   - $agegate['message']: The message set in the settings.
  *   - $agegate['validate_box']: REQUIRED - Contains the code. This changes
@@ -18,14 +18,18 @@
 
 <!-- start agegate__popup.tpl.php -->
 <div class="title">
-  <?php echo $agegate['name']; ?> <!-- title - not-required -->
+  <!-- title - not-required -->
+  <?php echo $agegate['name']; ?>
 </div>
-
-<?php echo $agegate['message']; ?> <!-- legal message - not-required -->
-<?php echo $agegate['validate_box']; ?> <!-- validation button code - REQUIRED -->
+<!-- legal message - not-required -->
+<?php echo $agegate['message']; ?>
+<!-- validation button code - REQUIRED -->
+<?php echo $agegate['validate_box']; ?>
 
 <div class="button-bar">
-  <?php echo $agegate['cancel_button']; ?> <!-- cancel button code - not required -->
-  <?php echo $agegate['verify_button']; ?> <!-- verify button code - REQUIRED -->
+  <!-- cancel button code - not required -->
+  <?php echo $agegate['cancel_button']; ?>
+  <!-- verify button code - REQUIRED -->
+  <?php echo $agegate['verify_button']; ?>
 </div>
 <!-- end agegate__popup.tpl.php -->

@@ -67,11 +67,12 @@ above.</p>
 <li><strong><code>DEBUG</code></strong> - If this is set to checked information
 is printed to the JS console. It should be left to unchecked on production sites
 as this can break IE.</li>
-<li><strong><code>SITENAME</code></strong> - Human readable name of your site</li>
+<li><strong><code>SITENAME</code></strong> - Human readable name of
+your site</li>
 <li><strong><code>MESSAGE</code></strong> - Message displayed to the end user.
 <br><strong>NOTE:</strong> The message added here is wrapped in p tags</li>
-<li><strong><code>AGEGATE_SHOWLOGO</code></strong> - If checked the default site logo
-file will be, otherwise no image will be loaded.</li>
+<li><strong><code>AGEGATE_SHOWLOGO</code></strong> - If checked the
+default site logo file will be, otherwise no image will be loaded.</li>
 </ol>
 </div>
 
@@ -92,7 +93,8 @@ wishes the Agegate to appear.</p>
 <li><strong><code>DEBUG</code></strong> - If this is set to checked information
 is printed to the JS console. It should be left to unchecked on production sites
  as this can break IE.</li>
-<li><strong><code>SITENAME</code></strong> - Human readable name of your site</li>
+<li><strong><code>SITENAME</code></strong> - Human readable name of
+your site</li>
 <li><strong><code>MESSAGE</code></strong> - Message displayed to the end user.
 <br><strong>NOTE:</strong> The message added here is wrapped in p tags</li>
 <li><strong><code>AGEGATE_SHOWLOGO</code></strong> - If checked the default site
