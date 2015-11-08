@@ -1,8 +1,10 @@
 /**
- * @file
- * This is the JS file at actually generates the age gate that gets displayed.
- */
-
+* @file
+* This is the JS file at actually generates the age gate that gets displayed.
+*
+* The validate() function should be modified if there are new VERIFICTAION TYPES
+* declared. The function should return a boolean value.
+*/
 (function ($) {
   'use strict';
   Drupal.behaviors.agegate = {
@@ -12,8 +14,8 @@
       }
 
       /**
-       * AgeGate function.
-       */
+      * AgeGate function.
+      */
       function startAgegate(context, setting) {
 
         // Settings brought in from drupal config.
@@ -25,31 +27,18 @@
         var CANCEL_URL = Drupal.settings.agegate.cancelurl;
         var LEGALAGE = Drupal.settings.agegate.legalage;
 
-        if (COOKIE_FORMAT === 1) {
-          $.cookie.raw = true;
-        }
-        else {
-          $.cookie.raw = false;
-        }
-
-        var cookie_options = {
-          expires: 1,
-          path: '/',
-          domain: COOKIE_DOMAIN
-        };
-
         var agegateHtmlWrapper = '<div id="agegate" style="display: block"><div class="agegate-message">' + TPLHTML + '</div></div>';
-        var cookieValue = '{"ROWCOUNT": 1, "COLUMNS": ["ISLEGAL", "REDIRECTURL"], "DATA":{"ISLEGAL": ["1"], "REDIRECTURL": ["' + CANCEL_URL + '"]}}';
 
         // Check for presence of the cookie, if none, append the HTML file.
-        if ($.cookie(COOKIE_NAME) == null) {
+        if (Cookie.get(COOKIE_NAME) == null) {
           $('body').append(agegateHtmlWrapper);
         }
 
         // Register event listener for age gate submit button.
         $('#agegate_verify').click(function () {
           if (validate() === true) {
-            $.cookie(COOKIE_NAME, cookieValue, cookie_options);
+            var cookieValue = '{"ROWCOUNT": 1, "COLUMNS": ["ISLEGAL", "REDIRECTURL"], "DATA":{"ISLEGAL": ["1"], "REDIRECTURL": ["' + CANCEL_URL + '"]}}';
+            Cookie.set(COOKIE_NAME, cookieValue, COOKIE_DOMAIN, 1);
             $('#agegate').css('display', 'none');
           }
         });
@@ -68,16 +57,50 @@
             var result = cutoff - birthday;
             if (result > 0) {
               return true;
-            }
-            else {
+            }else{
               return false;
             }
-          }
-          else if (VERIFICATIONTYPE === '2') {
+          }else if (VERIFICATIONTYPE === '2') {
             return true;
           }
         }
       }
     }
   };
+
+  var Cookie = {
+    set: function(name, value, domain, days) {
+      var date, expires;
+
+      if (days) {
+        date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        expires = "; expires="+date.toGMTString();
+      }else{
+        expires = "";
+      }
+      document.cookie = name + "=" + value + expires + "; path=/; domain=" + domain;
+    },
+
+    get: function(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++){
+        var c = ca[i];
+        while (c.charAt(0) == ' '){
+          c = c.substring(1,c.length);
+        }
+
+        if (c.indexOf(nameEQ) == 0){
+          return c.substring(nameEQ.length, c.length
+        });
+      }
+      return null;
+    },
+
+    erase: function(name) {
+      Cookie.set(name, '', -1);
+    }
+  };
+
 })(jQuery);
