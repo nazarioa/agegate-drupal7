@@ -16,8 +16,14 @@
 
       /**
        * AgeGate function.
+       *
+       * @param {string} context - The DOM as sent by drupal?
+       * @param {string} setting - An array with settings used by
+       *  sent by hook_preprocess_page.
        */
+
       function startAgegate(context, setting) {
+        console.log(context);
 
         // Settings brought in from drupal config.
         var VERIFICATIONTYPE = Drupal.settings.agegate.verifcationtype;
@@ -39,8 +45,7 @@
         $('#agegate_verify').click(function () {
           if (validate() === true) {
             var cookieValue = '{"ROWCOUNT": 1, "COLUMNS": ["ISLEGAL", "REDIRECTURL"], "DATA":{"ISLEGAL": ["1"], "REDIRECTURL": ["' + CANCEL_URL + '"]}}';
-            console.log(COOKIE_FORMAT);
-            if(COOKIE_FORMAT === '1'){
+            if (COOKIE_FORMAT === '1') {
               cookieValue = escape(cookieValue);
             }
 
