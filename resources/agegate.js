@@ -31,7 +31,7 @@
         var agegateHtmlWrapper = '<div id="agegate" style="display: block"><div class="agegate-message">' + TPLHTML + '</div></div>';
 
         // Check for presence of the cookie, if none, append the HTML file.
-        if (Cookie.get(COOKIE_NAME) == null) {
+        if (Cookie.get(COOKIE_NAME) === null) {
           $('body').append(agegateHtmlWrapper);
         }
 
@@ -77,8 +77,9 @@
   };
 
   var Cookie = {
-    set: function(name, value, domain, days) {
-      var date, expires;
+    set: function (name, value, domain, days) {
+      var date;
+      var expires;
 
       if (days) {
         date = new Date();
@@ -91,22 +92,22 @@
       document.cookie = name + "=" + value + expires + "; path=/; domain=" + domain;
     },
 
-    get: function(name) {
+    get: function (name) {
       var nameEQ = name + "=";
       var ca = document.cookie.split(';');
       for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') {
+        while (c.charAt(0) === ' ') {
           c = c.substring(1, c.length);
         }
-        if (c.indexOf(nameEQ) == 0) {
+        if (c.indexOf(nameEQ) === 0) {
           return c.substring(nameEQ.length, c.length);
         }
       }
       return null;
     },
 
-    erase: function(name) {
+    erase: function (name) {
       Cookie.set(name, '', -1);
     }
   };
