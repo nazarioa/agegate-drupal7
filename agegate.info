@@ -11,5 +11,4 @@ dependencies[] = date_popup
 
 stylesheets[all][] = resources/agegate.css
 
-scripts[] = resources/jquery.cookie-1.3.js
 scripts[] = resources/agegate.js
