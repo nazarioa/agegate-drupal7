@@ -24,7 +24,7 @@
       function startAgegate(context, setting) {
 
         // Settings brought in from drupal config.
-        var VERIFICATIONTYPE = Drupal.settings.agegate.verifcationtype;
+        var VERIFICATIONTYPE = Drupal.settings.agegate.verificationtype;
         var TPLHTML = Drupal.settings.agegate.popuphtml;
         var COOKIE_DOMAIN = Drupal.settings.agegate.cookiedomain;
         var COOKIE_NAME = Drupal.settings.agegate.cookiename;

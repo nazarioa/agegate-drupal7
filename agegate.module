@@ -86,14 +86,14 @@ function agegate_preprocess_page(&$vars) {
     'cookiename'      => variable_get('agegate_cookiename'),
     'cookieformat'    => variable_get('agegate_cookieformat'),
     'cancelurl'       => variable_get('agegate_cancelurl'),
-    'verifcationtype' => variable_get('agegate_verifcationtype'),
+    'verificationtype' => variable_get('agegate_verificationtype'),
     'displaypopup'    => $display,
     'legalage'        => variable_get('agegate_legalage'),
   );
 
   $settings['popuphtml'] = theme('preprocess_method', array(
     'agegate' => array(
-      'validate_box'  => agegate__verification_box_html($settings['verifcationtype'], array('age' => $settings['legalage'])),
+      'validate_box'  => agegate__verification_box_html($settings['verificationtype'], array('age' => $settings['legalage'])),
       'name'          => variable_get('agegate_sitename'),
       'message'       => variable_get('agegate_sitemessage'),
       'cancel_button' => '<button id="agegate_cancel" class="button cancel-verify">' . variable_get('agegate_cancelbtntext') . '</button>',
@@ -210,11 +210,11 @@ function agegate_admin_settings_form($node, &$form_state) {
     '#type' => 'textfield',
     '#default_value' => variable_get('agegate_cancelurl', 'http://www.centurycouncil.org/'),
   );
-  $form['general']['agegate_verifcationtype'] = array(
-    '#title' => t('Verifcation Type'),
+  $form['general']['agegate_verificationtype'] = array(
+    '#title' => t('Verification Type'),
     '#description' => t('How should the visitor verify their age?'),
     '#type' => 'select',
-    '#default_value' => variable_get('agegate_verifcationtype'),
+    '#default_value' => variable_get('agegate_verificationtype'),
     '#options' => array(
       1 => t('Prompt user for birthday'),
       2 => t('Prompt user with a yes / no question'),
@@ -387,15 +387,15 @@ function agegate_theme($existing, $type, $theme, $path) {
  *
  * This is based on the what the administrator has set for verification type.
  */
-function agegate__verification_box_html($verifcationtype, $options) {
-  if ($verifcationtype == 1) {
+function agegate__verification_box_html($verificationtype, $options) {
+  if ($verificationtype == 1) {
     $maxdate = $options['age'] - 1;
 
     drupal_add_library('system', 'ui.datepicker');
     drupal_add_js('jQuery(document).ready(function() {jQuery("#agegate_birthday").datepicker({dateFormat: "mm/dd/yy", autoSize: true, changeYear: true, maxDate: "-' . $maxdate . 'y"}); });', 'inline');
     return '<div>Select Birthday:<br /><input type="text" class="datepicker" id="agegate_birthday" value="Date"/></div>';
   }
-  elseif ($verifcationtype == 2) {
+  elseif ($verificationtype == 2) {
     return '<input type="hidden" value="' . $options['age'] . '" id="agegate_birthday">';
   }
   else {
