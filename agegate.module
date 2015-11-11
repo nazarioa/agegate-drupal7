@@ -105,7 +105,7 @@ function agegate_preprocess_page(&$vars) {
 
   $settings['popuphtml'] = theme('preprocess_method', array(
     'agegate' => array(
-      'validate_box'  => agegate__verification_box_html($settings['verificationtype'], array('age' => $settings['legalage'])),
+      'validate_box'  => agegate_verification_box_html($settings['verificationtype'], array('age' => $settings['legalage'])),
       'name'          => variable_get('agegate_sitename'),
       'message'       => variable_get('agegate_sitemessage'),
       'cancel_button' => '<button id="agegate_cancel" class="button cancel-verify">' . variable_get('agegate_cancelbtntext') . '</button>',
@@ -399,7 +399,7 @@ function agegate_theme($existing, $type, $theme, $path) {
  *
  * This is based on the what the administrator has set for verification type.
  */
-function agegate__verification_box_html($verificationtype, $options) {
+function agegate_verification_box_html($verificationtype, $options) {
   if ($verificationtype == 1) {
     $maxdate = $options['age'] - 1;
 
