@@ -85,6 +85,8 @@ function agegate_preprocess_page(&$vars) {
     $display = AGEGATE_NO;
   }
 
+
+
   $settings = array(
     'cookiedomain'    => variable_get('agegate_cookiedomain'),
     'cookiename'      => variable_get('agegate_cookiename'),
