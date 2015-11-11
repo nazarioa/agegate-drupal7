@@ -11,3 +11,21 @@ function agegate_enable() {
   // Enable administrators access by defualt.
   user_role_grant_permissions(3, array('admin agegate settings'), 'agegate');
 }
+
+/**
+ * Implements hook_uninstall().
+ */
+function agegate_uninstall(){
+  variable_del('agegate_cancelbtntext');
+  variable_del('agegate_cancelurl');
+  variable_del('agegate_cookiename');
+  variable_del('agegate_cookiedomain');
+  variable_del('agegate_cookieformat');
+  variable_del('agegate_hidefrom');
+  variable_del('agegate_legalage');
+  variable_del('agegate_show');
+  variable_del('agegate_sitemessage');
+  variable_del('agegate_sitename');
+  variable_del('agegate_verifybtntext');
+  variable_del('agegate_verificationtype');
+}
