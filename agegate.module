@@ -44,6 +44,11 @@ function agegate_preprocess_page(&$vars) {
   $display = AGEGATE_YES;
   $environment = 'live';
 
+  /*
+   * If this module is running on a PANTHEON server, PANTHEON specific settings
+   * can be set. If the module is not runnining on a PANTHEON server a generic
+   * setting is used.
+   */
   if (isset($_SERVER['PANTHEON_ENVIRONMENT'])) {
     $environment = $_SERVER['PANTHEON_ENVIRONMENT'];
 
