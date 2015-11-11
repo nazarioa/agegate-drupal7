@@ -11,6 +11,13 @@
  * This was updated by Nazario A. Ayala (Niztech) On October 24th, 2015
  */
 
+
+/**
+ * Constants.
+ *
+ * These constants are here to make the code easier to read and communicate
+ * settings to the JS file.
+ */
 define('AGEGATE_SHOW', 1);
 define('AGEGATE_HIDE', 0);
 
