@@ -81,17 +81,11 @@ function agegate_preprocess_page(&$vars) {
   }
 
   // Is the current page one of the pages where the Agegate not be dispalyed?
-  $current_path = trim(request_path());
-  $hide_from = array_map('trim', explode("\n", variable_get('agegate_hidefrom')));
-
-  foreach ($hide_from as $needle) {
-    $test = strripos($current_path, $needle);
-    if ($test > -1) {
-      $display = AGEGATE_NO;
-      // Current page is in the "do not display agegate on this page"
-      // list so lets set dispaly to no.
-    }
+  if (drupal_match_path(request_path(), variable_get('agegate_hidefrom'))) == TRUE) {
+    $display = AGEGATE_NO;
   }
+
+
 
   $settings = array(
     'cookiedomain'    => variable_get('agegate_cookiedomain'),
