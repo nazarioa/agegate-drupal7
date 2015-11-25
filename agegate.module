@@ -11,7 +11,6 @@
  * This was updated by Nazario A. Ayala (Niztech) On October 24th, 2015
  */
 
-
 /**
  * Constants.
  *
@@ -377,7 +376,7 @@ function agegate_theme($existing, $type, $theme, $path) {
   $result = array(
     'agegate_popup' => array(
       'template' => 'agegate--popup',
-      'variables',
+      'variables' => array(),
     ),
   );
   return $result;
