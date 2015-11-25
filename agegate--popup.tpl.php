@@ -21,17 +21,17 @@
 <!-- start agegate__popup.tpl.php -->
 <div class="title">
   <!-- title - not-required -->
-  <?php echo $agegate['name']; ?>
+  <?php echo $agegate_name; ?>
 </div>
 <!-- legal message - not-required -->
-<div class="message"><?php echo $agegate['message']; ?></div>
+<div class="message"><?php echo $agegate_message; ?></div>
 <!-- validation button code - REQUIRED -->
-<?php echo $agegate['validate_box']; ?>
+<?php echo $agegate_html_validatebox; ?>
 
 <div class="button-bar">
   <!-- cancel button code - not required -->
-  <?php echo $agegate['cancel_button']; ?>
+  <?php echo $agegate_html_btn_cancel; ?>
   <!-- verify button code - REQUIRED -->
-  <?php echo $agegate['verify_button']; ?>
+  <?php echo $agegate_html_btn_verify; ?>
 </div>
 <!-- end agegate__popup.tpl.php -->
