@@ -94,3 +94,16 @@
   text-align: center;
   border-bottom: 2px solid #595959;
 }
+
+#agegate .agegate-error {
+  border-color: rgba(255, 0, 0, 0);
+  border-width: 3px;
+  border-style: solid;
+  transition: border-color 1s, border-width 1s;
+}
+
+#agegate .agegate-error.agegate-error-on {
+  border-color: rgba(255, 0, 0, 1);
+  border-width: 3px;
+  border-style: solid;
+}

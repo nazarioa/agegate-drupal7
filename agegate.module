@@ -394,7 +394,7 @@ function agegate_verification_box_html($verificationtype, $options) {
 
     drupal_add_library('system', 'ui.datepicker');
     drupal_add_js('jQuery(document).ready(function() {jQuery("#agegate_birthday").datepicker({dateFormat: "mm/dd/yy", autoSize: true, changeYear: true, maxDate: "-' . $maxdate . 'y"}); });', 'inline');
-    return '<div>Select Birthday:<br /><input type="text" class="datepicker" id="agegate_birthday" value="Date"/></div>';
+    return '<div>Select Birthday:<br /><input type="text" class="datepicker agegate-error" id="agegate_birthday" value="Date"/></div>';
   }
   elseif ($verificationtype == 2) {
     return '<input type="hidden" value="' . $options['age'] . '" id="agegate_birthday">';

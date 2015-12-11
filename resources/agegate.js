@@ -50,6 +50,15 @@
             Cookie.set(COOKIE_NAME, cookieValue, COOKIE_DOMAIN, 1);
             $('#agegate').css('display', 'none');
           }
+          else {
+            $('#agegate_birthday').addClass('agegate-error-on');
+          }
+        });
+
+        // Register event listener for agegate_birthday input.
+        // In essence this clears out any previous errors.
+        $('#agegate_birthday').click(function () {
+          $('#agegate_birthday').removeClass('agegate-error-on');
         });
 
         // Register event listener for age gate cancel button.
