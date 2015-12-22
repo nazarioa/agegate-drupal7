@@ -242,7 +242,7 @@ function agegate_admin_settings_form($node, &$form_state) {
   );
   $form['environmentsettings']['agegate_hidefrom'] = array(
     '#title' => t('Do Not Display Agegate On These Pages'),
-    '#description' => t('What pages would you like the Agegate to AGEGATE_NOT dispaly on? Do not include website domain or  trailing slash.'),
+    '#description' => t('What pages would you like to exclude the Agegate from? Do not include website domain or trailing slash.'),
     '#type' => 'textarea',
     '#default_value' => variable_get('agegate_hidefrom', implode("\n", $hidefrom_defaults)),
   );
