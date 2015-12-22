@@ -96,10 +96,10 @@ function agegate_preprocess_page(&$vars) {
 
   $settings['popuphtml'] = theme('agegate_popup', array(
     'agegate_html_validatebox'  => agegate_verification_box_html($settings['verificationtype'], array('age' => $settings['legalage'])),
-    'agegate_name'          => variable_get('agegate_sitename'),
-    'agegate_message'       => variable_get('agegate_sitemessage'),
-    'agegate_html_btn_cancel' => '<button id="agegate_cancel" class="button cancel-verify">' . variable_get('agegate_cancelbtntext') . '</button>',
-    'agegate_html_btn_verify' => '<button id="agegate_verify" class="button age-verify">' . variable_get('agegate_verifybtntext') . '</button>',
+    'agegate_name'          => check_plain(check_plain(variable_get('agegate_sitename'))),
+    'agegate_message'       => check_plain(variable_get('agegate_sitemessage')),
+    'agegate_html_btn_cancel' => '<button id="agegate_cancel" class="button cancel-verify">' . check_plain(variable_get('agegate_cancelbtntext')) . '</button>',
+    'agegate_html_btn_verify' => '<button id="agegate_verify" class="button age-verify">' . check_plain(variable_get('agegate_verifybtntext')) . '</button>',
   ));
 
   drupal_add_js(array('agegate' => $settings), 'setting');
