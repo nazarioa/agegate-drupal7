@@ -258,7 +258,7 @@ function agegate_admin_settings_form($node, &$form_state) {
           '#default_value' => variable_get('agegate_show', AGEGATE_HIDE),
         );
         $form['environmentsettings']['agegate_cookiedomain'] = array(
-          '#title' => t("Cookie's Domain"),
+          '#title' => t("Cookie Domain"),
           '#description' => t('Set the DEV domain name that eWinery DEV will use. It is recommended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
           '#type' => 'textfield',
           '#default_value' => variable_get('agegate_cookiedomain', '.domain.com'),
@@ -272,7 +272,7 @@ function agegate_admin_settings_form($node, &$form_state) {
           '#default_value' => variable_get('agegate_show', AGEGATE_SHOW),
         );
         $form['environmentsettings']['agegate_cookiedomain'] = array(
-          '#title' => t("Cookie's Domain"),
+          '#title' => t("Cookie Domain"),
           '#description' => t('Set the TEST domain name that eWinery TEST will use. It is recommended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
           '#type' => 'textfield',
           '#default_value' => variable_get('agegate_cookiedomain', '.domain.com'),
@@ -287,7 +287,7 @@ function agegate_admin_settings_form($node, &$form_state) {
           '#disabled' => TRUE,
         );
         $form['environmentsettings']['agegate_cookiedomain'] = array(
-          '#title' => t("Cookie's Domain"),
+          '#title' => t("Cookie Domain"),
           '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recommended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
           '#type' => 'textfield',
           '#default_value' => variable_get('agegate_cookiedomain', '.domain.com'),
@@ -302,7 +302,7 @@ function agegate_admin_settings_form($node, &$form_state) {
       '#default_value' => variable_get('agegate_show', AGEGATE_SHOW),
     );
     $form['environmentsettings']['agegate_cookiedomain'] = array(
-      '#title' => t("Cookie's Domain"),
+      '#title' => t("Cookie Domain"),
       '#description' => t('Set the LIVE domain name that eWinery LIVE will use. It is recommended that it be a top level domain.<br />Note: you need not use eWinery in order to use this module.'),
       '#type' => 'textfield',
       '#default_value' => variable_get('agegate_cookiedomain', '.domain.com'),
