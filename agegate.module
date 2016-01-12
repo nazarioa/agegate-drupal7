@@ -126,7 +126,7 @@ function agegate_help($path, $arg) {
 function agegate_permission() {
   return array(
     'admin agegate settings' => array(
-      'title' => t('Administrator Agegate'),
+      'title' => t('Admminister Agegate'),
       'description' => t('Configure Agegate Options'),
     ),
   );
@@ -221,8 +221,8 @@ function agegate_admin_settings_form($node, &$form_state) {
     ),
   );
   $form['general']['agegate_legalage'] = array(
-    '#title' => t('Legal Drinking Age'),
-    '#description' => t('The legal drinking age to check against.'),
+    '#title' => t('Legal Age'),
+    '#description' => t('The legal age to check against.'),
     '#type' => 'textfield',
     '#default_value' => variable_get('agegate_legalage', 21),
   );
