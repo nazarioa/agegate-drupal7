@@ -4,15 +4,12 @@
  * Displays the Agegate.
  *
  * Available variables:
- * - $agegate (array): Contains all the variables available to the Agegare
- *   - $agegate['name']: Title set in the settings.
- *   - $agegate['message']: The message set in the settings.
- *   - $agegate['validate_box']: REQUIRED - Contains the code. This changes
+ *   - $agegate_name: Title set in the settings.
+ *   - $agegate_message: The message set in the settings.
+ *   - $agegate_html_validatebox: REQUIRED - Contains the code. This changes
  *     depending on the validation type.
- *   - $agegate['cancel_button']: Code for a cancel button if you need.
- *   - $agegate['verify_button']: REQUIRED - button needed to triger the check.
- *
- * @see template_preprocess_forum_list()
+ *   - $agegate_html_btn_cancel: Code for a cancel button if you need.
+ *   - $agegate_html_btn_verify: REQUIRED - button needed to triger the check.
  *
  * @ingroup themeable
  */
