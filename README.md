@@ -13,7 +13,8 @@ INTRODUCTION
 ------------
 
 This module prompts the user for an age validator. If the user verifies his
-or her age is over 21, a cookie gets deposited with this information.
+or her age is over a given age set (configurable in the module), a cookie
+gets deposited with this information.
 
  * For a full description of the module, visit the project page:
    https://www.drupal.org/sandbox/nazario.a/2600074
@@ -27,8 +28,9 @@ REQUIREMENTS
 
 This module requires the following modules:
 
- * jquery_update (https://www.drupal.org/project/jquery_update).
- * date (https://www.drupal.org/project/date).
+ * jquery_update - (https://www.drupal.org/project/jquery_update).
+ * date - (https://www.drupal.org/project/date).
+ * date_popup - Part of date.
 
 
 INSTALLATION
