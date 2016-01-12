@@ -317,7 +317,7 @@ function agegate_admin_settings_form($node, &$form_state) {
   );
   $form['advanced']['agegate_cookiename'] = array(
     '#title' => t('Cookie Name'),
-    '#description' => t("Set the cookie name. Ewinery looks for a cookie named \"ISLEGAL\". You probobly don't need to change this."),
+    '#description' => t("Set the cookie name. Ewinery looks for a cookie named 'ISLEGAL'. You probobly don't need to change this."),
     '#type' => 'textfield',
     '#default_value' => variable_get('agegate_cookiename', 'ISLEGAL'),
   );
