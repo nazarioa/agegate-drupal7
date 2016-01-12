@@ -7,8 +7,8 @@
  * that they are of a legal age then the age gate will deposit a cookie in the
  * browser and allow the user to continue onto the site.
  *
- * This was developed by Nazario A. Ayala (Niztech) On Febuary 14th, 2013
- * This was updated by Nazario A. Ayala (Niztech) On October 24th, 2015
+ * This was developed by Nazario A. Ayala (Niztech) On Febuary 14th, 2013 and
+ * last updated in 2016.
  */
 
 /**
@@ -35,9 +35,8 @@ define('AGEGATE_NO', 0);
  */
 function agegate_preprocess_page(&$vars) {
 
-  // Going through the module configuration settings
-  // to see if the agegate should be or not dispalyed
-  // on the current page.
+  // Going through the module configuration settings to see if the agegate
+  // should be or not displayed on the current page.
   //
   // Setting initial flags.
   $display = AGEGATE_YES;
@@ -334,11 +333,12 @@ function agegate_admin_settings_form($node, &$form_state) {
 
 
 /**
- * Implements hook_form_validate().
+ * Implements hook_validate().
  */
 function agegate_admin_settings_form_validate($form, &$form_state) {
   // Check that the domain is valid -- we have a very loose definition
   // for a valid cookie domain name.
+  //
   // A valid cookie domain consist of a string starting with a period "." and
   // having at least one more period after it and having as its only other
   // characters "a" through "z", "A" through "Z", and underscore "_" and a
@@ -387,6 +387,15 @@ function agegate_theme($existing, $type, $theme, $path) {
  * Generates HTML for the verification box.
  *
  * This is based on the what the administrator has set for verification type.
+ *
+ * @param int $verificationtype - An integer that is used to represent the
+ * verification type that the has been configured to be used.
+ *
+ * @param array $options - an array of options that may be needed for UI/UX
+ * purposes. Typically $options['age'] is used as the defined "valid age."
+ *
+ * @return string || false - Returns an HTML string which is the code needed for
+ * to render the input for that verification type.
  */
 function agegate_verification_box_html($verificationtype, $options) {
   if ($verificationtype == 1) {

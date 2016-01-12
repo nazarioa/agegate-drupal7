@@ -1,11 +1,11 @@
 <?php
 /**
  * @file
- * Baic instalation file for the Agegate module.
+ * Basic installation file for the Agegate module.
  */
 
 /**
- * Implements hook_uninstall().
+ * Implement hook_uninstall().
  */
 function agegate_uninstall() {
   variable_del('agegate_cancelbtntext');
