@@ -10,5 +10,3 @@ dependencies[] = date
 dependencies[] = date_popup
 
 stylesheets[all][] = resources/agegate.css
-
-scripts[] = resources/agegate.js
